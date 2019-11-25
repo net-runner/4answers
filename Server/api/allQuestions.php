@@ -1,5 +1,5 @@
 <?php
-//Get random 10 questions
+//Get all questions
 header('Access-Control-Allow-Origin: *');
 header('Content-Type: application/json');
 
@@ -8,9 +8,7 @@ if (!$conn) exit('Connection error');
 
 $sql =
     "SELECT *
-    FROM questions
-    ORDER BY RAND()
-    LIMIT 10";
+    FROM questions";
 
 
 $rw = $conn->query($sql) or die('Cannot fetch questions');
