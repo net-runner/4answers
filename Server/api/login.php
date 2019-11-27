@@ -10,8 +10,16 @@ header('Access-Control-Allow-Headers: Access-Control-Allow-Headers, Content-Type
 
 
 //Get posted data
-$un = $_GET['username'];
-$pw = $_GET['password'];
+if (isset($_GET['username']) and isset($_GET['password'])) {
+    //If delivered as parameters
+    $un = $_GET['username'];
+    $pw = $_GET['password'];
+} else {
+    //If delivered as body
+    $data = json_decode(file_get_contents('php://input'), true);
+    $un = $data['username'];
+    $pw = $data['password'];
+}
 $conn = new mysqli('localhost', 'root', '', '4answers');
 if (!$conn) exit('Connection error');
 $testQ = "SELECT * FROM users WHERE username='{$un}'";
@@ -22,8 +30,9 @@ $res = $rw->fetch_row();
 if (!empty($res)) {
     if (password_verify($pw, $res[2])) {
         echo json_encode(array(
-            'result' => "Success",
-            'message' => "Logged in."
+            'result' => "Success.",
+            'message' => "Logged in.",
+            'userp' => $res[7]
         ));
     } else {
         echo json_encode(array(

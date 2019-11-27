@@ -12,7 +12,14 @@ $conn = new mysqli('localhost', 'root', '', '4answers');
 if (!$conn) exit('Connection error');
 
 //Get posted data
-$un = $_GET['username'];
+if (isset($_GET['username'])) {
+    //If delivered as parameters
+    $un = $_GET['username'];
+} else {
+    //If delivered as body
+    $data = json_decode(file_get_contents('php://input'), true);
+    $un = $data['username'];
+}
 
 $delQuery = "DELETE FROM users WHERE username='{$un}'";
 
