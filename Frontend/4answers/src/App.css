@@ -1,5 +1,6 @@
 @import url("https://fonts.googleapis.com/css?family=Varela&display=swap");
 @import "../node_modules/@material/elevation/dist/mdc.elevation.css";
+
 .App {
   text-align: center;
   background-color: #673ab7;
@@ -21,8 +22,14 @@
   color: white;
 }
 
+* {
+  margin: 0;
+  padding: 0;
+}
+
 .header {
-  height: 10vh;
+  height: 20vh;
+  flex: 1;
   width: 98vw;
   padding: 1vw;
   padding-left: 2vw;
@@ -40,41 +47,52 @@
   text-align: start;
   flex-direction: column;
 }
+
 .nomargin {
   margin: 0;
   padding: 0;
 }
+
 .flexcenter {
   align-content: center;
   justify-content: center;
   align-items: center;
 }
+
 .row {
   display: flex;
   flex-direction: row;
 }
+
 .column {
   display: flex;
   flex-direction: column;
 }
+
 .userDiv {
   display: flex;
+  margin-right: 2.5vw;
+  margin-top: 1vw;
+  margin-bottom: 1vw;
   flex-direction: column;
   align-content: center;
   justify-content: center;
   align-items: center;
 }
-.userDiv > p {
+
+.userDiv>p {
   margin: 0;
   padding: 0;
 }
+
 .title-text {
   margin: 0;
   margin-left: 2.5vw;
+  margin-top: 1vw;
+  margin-bottom: 1vw;
   letter-spacing: 10px;
   font-size: calc(10px + 3vmin);
   padding: 0;
-
   font-family: "Varela", sans-serif;
 }
 
@@ -106,6 +124,7 @@
   align-items: center;
   padding: 8vw 5vw 8vw 5vw;
 }
+
 .login-box {
   min-width: 20vw;
   margin: 8vw 5vw 8vw 5vw;
@@ -113,6 +132,7 @@
   justify-content: center;
   align-items: center;
 }
+
 .fancy-text {
   padding: 0;
   margin: 0;

@@ -32,7 +32,8 @@ if (!empty($res)) {
         echo json_encode(array(
             'result' => "Success.",
             'message' => "Logged in.",
-            'userp' => $res[7]
+            'userp' => $res[7],
+            'type' => $res[4]
         ));
     } else {
         echo json_encode(array(

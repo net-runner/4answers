@@ -38,7 +38,8 @@ if (strlen($un) > 6 and strlen($pw) > 6) {
         echo json_encode(array(
             'result' => "Success.",
             'message' => "Account created.",
-            'userp' => 0
+            'userp' => 0,
+            'type' => 'normal'
         ));
     } else {
         //Handle error
