@@ -31,7 +31,7 @@ function App() {
             {user.type === "normal" && (
               <>
                 <TabPanel value={screen} index={0} style={{ flex: 9 }}>
-                  <TestPanel />
+                  <TestPanel user={user} />
                 </TabPanel>
                 <TabPanel value={screen} index={1} style={{ flex: 9 }}>
                   Leaderboard

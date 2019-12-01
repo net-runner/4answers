@@ -40,7 +40,7 @@ export const Header = ({ screen, cScreen, handleLogout, user }) => {
               </div>
               <p
                 className="nomargin"
-                style={{ color: "#fff", fontSize: "1.3vw" }}
+                style={{ color: "#757575", fontSize: "1.3vw" }}
               >
                 {user.userp}% correct
               </p>
