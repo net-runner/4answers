@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Elevation } from "@rmwc/elevation";
 import "../App.css";
-export const Question = ({ data, index }) => {
+export const Question = ({ data, index, qS, cqS }) => {
   const [Selected, setSelected] = useState();
   const [Questions, setQuestions] = useState();
   const shuffle = array => {
@@ -17,12 +17,16 @@ export const Question = ({ data, index }) => {
     }
     return array;
   };
-
-  const Correct = data.questions.filter((item, indexor) => {
-    if (item.correct) return item;
-  });
   const handleSelection = indor => {
-    setSelected(indor);
+    let xor = [...qS];
+    xor[index].selected = indor;
+    cqS(xor);
+    localStorage.setItem(
+      "q",
+      JSON.stringify({
+        questions: xor
+      })
+    );
   };
   useEffect(() => {
     let Q = data.questions.map((item, indexor) => {
@@ -39,15 +43,17 @@ export const Question = ({ data, index }) => {
           {index + 1}. {data.qText}
         </div>
         {Questions &&
-          Questions.map((item, index) => {
+          Questions.map((item, indor) => {
             return (
               <div
                 className="question"
-                style={{ color: Selected === index && "#7C4DFF" }}
-                key={index}
-                onClick={() => handleSelection(index)}
+                style={{
+                  color: qS[index].selected === indor && "#7C4DFF"
+                }}
+                key={indor}
+                onClick={() => handleSelection(indor)}
               >
-                {og[index]}. {item.value}
+                {og[indor]}. {item.value}
               </div>
             );
           })}

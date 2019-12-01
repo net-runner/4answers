@@ -3,6 +3,10 @@ import "../App.css";
 import { Question } from "../components/Question";
 export const TestPanel = () => {
   const [Questions, setQuestions] = useState([]);
+  const handleSelection = (dagane, index) => {
+    let questionibus = [...Questions];
+    questionibus[dagane].selected = index;
+  };
   const getCategories = () => {};
   const getQuestions = () => {
     fetch("http://localhost/4answers/server/api/q.php", {
@@ -38,7 +42,15 @@ export const TestPanel = () => {
       <div className=""></div>
       {Questions
         ? Questions.map((item, index) => {
-            return <Question key={index} data={item} index={index} />;
+            return (
+              <Question
+                key={index}
+                data={item}
+                index={index}
+                cqS={setQuestions}
+                qS={Questions}
+              />
+            );
           })
         : null}
     </div>
