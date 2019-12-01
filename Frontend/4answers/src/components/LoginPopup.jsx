@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import TextField from "@material-ui/core/TextField";
-import { makeStyles, withStyles } from "@material-ui/core/styles";
+import { withStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import { Elevation } from "@rmwc/elevation";
 import "../App.css";
