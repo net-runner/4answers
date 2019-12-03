@@ -42,7 +42,7 @@ export const Header = ({ screen, cScreen, handleLogout, user }) => {
                 className="nomargin"
                 style={{ color: "#757575", fontSize: "1.3vw" }}
               >
-                {user.userp}% correct
+                {user.userp.toFixed(2)}% correct
               </p>
             </div>
             <IconButton onClick={() => handleLogout()}>

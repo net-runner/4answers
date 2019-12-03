@@ -109,6 +109,23 @@ export const Question = ({ data, index, qS, cqS, fin }) => {
           {og[indor]}. {item.value}
         </div>
       );
+    } else if (
+      Correct[0] !== data.questions[indor] &&
+      fin &&
+      !qS[index].correct
+    ) {
+      return (
+        <div
+          className="question"
+          style={{
+            color: "#D32F2F"
+          }}
+          key={indor}
+          onClick={() => handleSelection(indor)}
+        >
+          {og[indor]}. {item.value}
+        </div>
+      );
     } else {
       return (
         <div

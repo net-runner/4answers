@@ -32,7 +32,7 @@ if (strlen($un) > 6 and strlen($pw) > 6) {
         $dt = date("Y-m-d H:i:s");
 
         $creation_query = "INSERT INTO users (username, password, userType, registerAt, correctA, falseA, correctPercentage)
-        VALUES ('{$un}','{$hashed_password}','normal','{$dt}',0,0,0)";
+        VALUES ('{$un}','{$hashed_password}','normal','{$dt}',1,1,100)";
 
         $rw2 = $conn->query($creation_query) or die('Cannot add user');
         echo json_encode(array(

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "../App.css";
 import { Question } from "../components/Question";
 import { Buttonor } from "../components/Buttonor";
-export const TestPanel = ({ user }) => {
+export const TestPanel = ({ user, sU }) => {
   const [Corrects, setCorrects] = useState(0);
   const [Finished, setFinished] = useState(false);
   const [answer, setAnswer] = useState([]);
@@ -27,7 +27,7 @@ export const TestPanel = ({ user }) => {
     });
     setCorrects(crcts.length);
     setFinished(true);
-    //localStorage.removeItem('q');
+    localStorage.removeItem("q");
     fetch("http://localhost/4answers/server/api/u.php", {
       method: "POST",
       headers: {
@@ -44,7 +44,13 @@ export const TestPanel = ({ user }) => {
       })
     })
       .then(response => response.json())
-      .then(data => console.log(data))
+      .then(data => {
+        let xd = { ...user };
+        xd.userp = data.cP;
+        sU(xd);
+        localStorage.setItem("user", JSON.stringify(xd));
+        console.log(xd);
+      })
       .catch(err => console.log("Error: " + err));
   };
 
@@ -77,9 +83,9 @@ export const TestPanel = ({ user }) => {
   }, []);
   const Again = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
+    window.location.reload();
     getQuestions();
     setFinished(false);
-    window.location.reload();
   };
   const calculateOutcome = () => {};
   return (

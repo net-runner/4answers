@@ -30,7 +30,8 @@ if (!empty($res)) {
     $crA = $res[5] + $st["corrects"];
     $fA = $res[6] + $st["failures"];
     $cP = ($crA / $fA) * 100;
-    $updateQ = "UPDATE users SET correctA='{$crA}',
+    $updateQ = "UPDATE users SET
+    correctA='{$crA}',
     falseA='{$fA}',
     correctPercentage='{$cP}'
     WHERE username='{$un}'";
@@ -45,6 +46,39 @@ if (!empty($res)) {
         'failures' => $fA,
         'cP' => $cP
     ));
+    //Update stats for questions
+    $A = $st["answers"];
+    $i = 0;
+    while ($i < count($A)) {
+        $ok  = $A[$i];
+        $id = $ok["id"];
+        $qQ = "SELECT * FROM questions WHERE id='{$id}'";
+        $rws = $conn->query($qQ) or die('Cannot fetch question');
+        $rwss = $rws->fetch_row();
+        if (isset($ok["correct"])) {
+            if ($ok["correct"]) {
+                $crAQ = $rwss[7] + 1;
+                $fAQ = $rwss[8];
+            } else {
+                $crAQ = $rwss[7];
+                $fAQ = $rwss[8] + 1;
+            }
+        } else {
+            $crAQ = $rwss[7];
+            $fAQ = $rwss[8] + 1;
+        }
+        $cPQ = ($crAQ / $fAQ) * 100;
+        $updateQQ = "UPDATE questions SET
+            correctA='{$crAQ}',
+            falseA='{$fAQ}',
+            correctPercentage='{$cPQ}'
+            WHERE id='{$id}'";
+        $rwson = $conn->query($updateQQ) or die(json_encode(array(
+            'result' => "Error",
+            'message' => "Cannot perform question stats update."
+        )));
+        $i++;
+    }
 } else {
     //Handle error
     echo json_encode(array(
