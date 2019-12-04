@@ -12,7 +12,11 @@ export const TestPanel = ({ user, sU }) => {
     let flag = false;
     let answers = Questions.map((item, index) => {
       if (item.selected === undefined) flag = true;
-      return { selected: item.selected, id: item.id, correct: item.correct };
+      return {
+        selected: item.selected,
+        id: item.id,
+        correct: item.correct
+      };
     });
     if (flag)
       if (
@@ -28,6 +32,14 @@ export const TestPanel = ({ user, sU }) => {
     setCorrects(crcts.length);
     setFinished(true);
     localStorage.removeItem("q");
+    console.log({
+      username: user.username,
+      answers,
+      stats: {
+        corrects: Corrects,
+        failures: answers.length - Corrects
+      }
+    });
     fetch("http://localhost/4answers/server/api/u.php", {
       method: "POST",
       headers: {
@@ -36,8 +48,8 @@ export const TestPanel = ({ user, sU }) => {
       },
       body: JSON.stringify({
         username: user.username,
+        answers,
         stats: {
-          answers: answer,
           corrects: Corrects,
           failures: answers.length - Corrects
         }
@@ -51,6 +63,24 @@ export const TestPanel = ({ user, sU }) => {
         localStorage.setItem("user", JSON.stringify(xd));
         console.log(xd);
       })
+      .catch(err => console.log("Error: " + err));
+    console.log({
+      username: user.username,
+      questions: { data: Questions }
+    });
+    fetch("http://localhost/4answers/server/api/ch.php", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        username: user.username,
+        questions: { data: JSON.stringify(Questions) }
+      })
+    })
+      .then(response => response.json())
+      .then(data => console.log(data))
       .catch(err => console.log("Error: " + err));
   };
 
@@ -83,9 +113,11 @@ export const TestPanel = ({ user, sU }) => {
   }, []);
   const Again = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
-    window.location.reload();
-    getQuestions();
-    setFinished(false);
+    setTimeout(() => {
+      window.location.reload();
+      getQuestions();
+      setFinished(false);
+    }, 500);
   };
   const calculateOutcome = () => {};
   return (

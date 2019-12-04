@@ -12,11 +12,13 @@ if (isset($_GET['username']) and isset($_GET['stats'])) {
     //If delivered as parameters
     $un = $_GET['username'];
     $st = $_GET['stats'];
+    $an = $data['answers'];
 } else {
     //If delivered as body
     $data = json_decode(file_get_contents('php://input'), true);
     $un = $data['username'];
     $st = $data['stats'];
+    $an = $data['answers'];
 }
 //Handle basic db connection
 $conn = new mysqli('localhost', 'root', '', '4answers');
@@ -30,15 +32,19 @@ if (!empty($res)) {
     $crA = $res[5] + $st["corrects"];
     $fA = $res[6] + $st["failures"];
     $cP = ($crA / $fA) * 100;
-    $updateQ = "UPDATE users SET
-    correctA='{$crA}',
-    falseA='{$fA}',
-    correctPercentage='{$cP}'
-    WHERE username='{$un}'";
-    $xx = $conn->query($updateQ) or die(json_encode(array(
-        'result' => "Error",
-        'message' => "Cannot perform user stats update."
-    )));
+    if (!($stmt = $conn->prepare("UPDATE users SET
+    correctA= (?),
+    falseA=(?),
+    correctPercentage=(?)
+    WHERE username=(?)"))) {
+        echo json_encode("Prepare failed:  (" . $stmt->errno . ") " . $stmt->error);
+    }
+    if (!$stmt->bind_param("iids", $crA, $fA, $cP, $un)) {
+        echo json_encode("Binding parameters failed: (" . $stmt->errno . ") " . $stmt->error);
+    }
+    if (!$stmt->execute()) {
+        echo json_encode("Execute failed: (" . $stmt->errno . ") " . $stmt->error);
+    }
     echo json_encode(array(
         'result' => "Success",
         'message' => "User stats updated.",
@@ -47,10 +53,9 @@ if (!empty($res)) {
         'cP' => $cP
     ));
     //Update stats for questions
-    $A = $st["answers"];
     $i = 0;
-    while ($i < count($A)) {
-        $ok  = $A[$i];
+    while ($i < count($an)) {
+        $ok  = $an[$i];
         $id = $ok["id"];
         $qQ = "SELECT * FROM questions WHERE id='{$id}'";
         $rws = $conn->query($qQ) or die('Cannot fetch question');
@@ -68,15 +73,19 @@ if (!empty($res)) {
             $fAQ = $rwss[8] + 1;
         }
         $cPQ = ($crAQ / $fAQ) * 100;
-        $updateQQ = "UPDATE questions SET
-            correctA='{$crAQ}',
-            falseA='{$fAQ}',
-            correctPercentage='{$cPQ}'
-            WHERE id='{$id}'";
-        $rwson = $conn->query($updateQQ) or die(json_encode(array(
-            'result' => "Error",
-            'message' => "Cannot perform question stats update."
-        )));
+        if (!($stmt = $conn->prepare("UPDATE questions SET
+        correctA= (?),
+        falseA=(?),
+        correctPercentage=(?)
+        WHERE id=(?)"))) {
+            echo json_encode("Prepare failed:  (" . $stmt->errno . ") " . $stmt->error);
+        }
+        if (!$stmt->bind_param("iidi", $crAQ, $fAQ, $cPQ, $id)) {
+            echo json_encode("Binding parameters failed: (" . $stmt->errno . ") " . $stmt->error);
+        }
+        if (!$stmt->execute()) {
+            echo json_encode("Execute failed: (" . $stmt->errno . ") " . $stmt->error);
+        }
         $i++;
     }
 } else {

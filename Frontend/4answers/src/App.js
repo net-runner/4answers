@@ -4,6 +4,7 @@ import { LoginPopup } from "./components/LoginPopup";
 import { Header } from "./components/Header";
 import { TabPanel } from "./components/TabPanel";
 import { TestPanel } from "./screens/TestPanel";
+import { Leaderboard } from "./screens/Leaderboard";
 
 function App() {
   const [user, setUser] = useState();
@@ -34,7 +35,7 @@ function App() {
                   <TestPanel user={user} sU={setUser} />
                 </TabPanel>
                 <TabPanel value={screen} index={1} style={{ flex: 9 }}>
-                  Leaderboard
+                  <Leaderboard />
                 </TabPanel>
                 <TabPanel value={screen} index={2} style={{ flex: 9 }}>
                   History

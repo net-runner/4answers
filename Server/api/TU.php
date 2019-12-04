@@ -1,14 +1,18 @@
 <?php
-//Get all users
+//GET TOP 10 USERS BY CORRECT PERCENTAGE
 header('Access-Control-Allow-Origin: *');
 header('Content-Type: application/json');
+header('Access-Control-Allow-Methods: POST');
+header('Access-Control-Allow-Headers: Access-Control-Allow-Headers, Content-Type, Access-Control-Allow-Methods, Authorization, X-Requested-With');
 
 $conn = new mysqli('localhost', 'root', '', '4answers');
 if (!$conn) exit('Connection error');
 
 $sql =
     "SELECT *
-    FROM users";
+    FROM users WHERE userType = 'normal'
+    ORDER BY correctPercentage DESC
+    LIMIT 10";
 
 
 $rw = $conn->query($sql) or die('Cannot fetch users');
@@ -18,10 +22,9 @@ if ($rows > 0) {
     $q_arr['data'] = array();
     while ($row = $rw->fetch_row()) {
         $q_item = array(
-            'result' => "Success.",
-            'message' => "Logged in.",
-            'userp' => $res[7],
-            'type' => $res[4]
+            'username' => $row[1],
+            'userp' => $row[7],
+            'registerAt' => $row[3]
         );
         array_push($q_arr['data'], $q_item);
     }
