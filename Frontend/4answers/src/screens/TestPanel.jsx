@@ -7,6 +7,19 @@ export const TestPanel = ({ user, sU }) => {
   const [Finished, setFinished] = useState(false);
   const [answer, setAnswer] = useState([]);
   const [Questions, setQuestions] = useState([]);
+  const shuffle = array => {
+    var currentIndex = array.length,
+      temporaryValue,
+      randomIndex;
+    while (0 !== currentIndex) {
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex -= 1;
+      temporaryValue = array[currentIndex];
+      array[currentIndex] = array[randomIndex];
+      array[randomIndex] = temporaryValue;
+    }
+    return array;
+  };
   const getCategories = () => {};
   const handleFinish = () => {
     let flag = false;
@@ -32,14 +45,6 @@ export const TestPanel = ({ user, sU }) => {
     setCorrects(crcts.length);
     setFinished(true);
     localStorage.removeItem("q");
-    console.log({
-      username: user.username,
-      answers,
-      stats: {
-        corrects: Corrects,
-        failures: answers.length - Corrects
-      }
-    });
     fetch("http://localhost/4answers/server/api/u.php", {
       method: "POST",
       headers: {
@@ -50,8 +55,8 @@ export const TestPanel = ({ user, sU }) => {
         username: user.username,
         answers,
         stats: {
-          corrects: Corrects,
-          failures: answers.length - Corrects
+          corrects: crcts.length,
+          answers: answers.length
         }
       })
     })
@@ -61,13 +66,8 @@ export const TestPanel = ({ user, sU }) => {
         xd.userp = data.cP;
         sU(xd);
         localStorage.setItem("user", JSON.stringify(xd));
-        console.log(xd);
       })
       .catch(err => console.log("Error: " + err));
-    console.log({
-      username: user.username,
-      questions: { data: Questions }
-    });
     fetch("http://localhost/4answers/server/api/ch.php", {
       method: "POST",
       headers: {
@@ -94,13 +94,18 @@ export const TestPanel = ({ user, sU }) => {
       .then(result => result.json())
       .catch(err => console.log(err))
       .then(data => {
-        setQuestions(data.data);
-        localStorage.setItem(
-          "q",
-          JSON.stringify({
-            questions: data.data
-          })
-        );
+        if (data.data) {
+          let datois = data.data.map((item, index) => {
+            return { ...item, questions: shuffle(item.questions) };
+          });
+          setQuestions(datois);
+          localStorage.setItem(
+            "q",
+            JSON.stringify({
+              questions: datois
+            })
+          );
+        }
       });
   };
   useEffect(() => {
@@ -119,7 +124,6 @@ export const TestPanel = ({ user, sU }) => {
       setFinished(false);
     }, 500);
   };
-  const calculateOutcome = () => {};
   return (
     <div className="column">
       <div className=""></div>

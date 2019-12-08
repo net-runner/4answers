@@ -5,6 +5,7 @@ import { Header } from "./components/Header";
 import { TabPanel } from "./components/TabPanel";
 import { TestPanel } from "./screens/TestPanel";
 import { Leaderboard } from "./screens/Leaderboard";
+import { History } from "./screens/History";
 
 function App() {
   const [user, setUser] = useState();
@@ -38,7 +39,7 @@ function App() {
                   <Leaderboard />
                 </TabPanel>
                 <TabPanel value={screen} index={2} style={{ flex: 9 }}>
-                  History
+                  <History user={user} />
                 </TabPanel>
               </>
             )}

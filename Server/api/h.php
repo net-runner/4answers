@@ -1,27 +1,24 @@
 <?php
-//Register endpoint
-
-//Adding headers
+//Get all history data
 header('Access-Control-Allow-Origin: *');
 header('Content-Type: application/json');
 header('Access-Control-Allow-Methods: POST');
 header('Access-Control-Allow-Headers: Access-Control-Allow-Headers, Content-Type, Access-Control-Allow-Methods, Authorization, X-Requested-With');
 
+$conn = new mysqli('localhost', 'root', '', '4answers');
+if (!$conn) exit('Connection error');
 
 
 //Get posted data
-if (isset($_GET['username']) and isset($_GET['password'])) {
+if (isset($_GET['username'])) {
     //If delivered as parameters
     $un = $_GET['username'];
-    $pw = $_GET['password'];
 } else {
     //If delivered as body
     $data = json_decode(file_get_contents('php://input'), true);
     $un = $data['username'];
-    $pw = $data['password'];
 }
-$conn = new mysqli('localhost', 'root', '', '4answers');
-if (!$conn) exit('Connection error');
+
 if (!($stmt = $conn->prepare("SELECT * FROM users WHERE username=(?)"))) {
         echo json_encode("Prepare failed:  (" . $stmt->errno . ") " . $stmt->error);
 }
@@ -34,19 +31,26 @@ if (!$stmt->execute()) {
 $res = $stmt->get_result()->fetch_row();
 //If there is a user with this username
 if (!empty($res)) {
-    if (password_verify($pw, $res[2])) {
-        echo json_encode(array(
-            'result' => "Success.",
-            'message' => "Logged in.",
-            'userp' => $res[7],
-            'type' => $res[4]
-        ));
-    } else {
-        echo json_encode(array(
-            'result' => "Error",
-            'message' => "Passwords does not match."
-        ));
+    $id = $res[0];
+    $sql = "SELECT * FROM history WHERE userId = {$id} ORDER BY createdAt DESC";
+    $rw = $conn->query($sql) or die('Cannot fetch history');
+    $rows = $rw->num_rows;
+    if ($rows > 0) {
+    $q_arr = array();
+    $q_arr['data'] = array();
+    while ($row = $rw->fetch_row()) {
+        $questions = json_decode($row[3]);
+        $q_item = array(
+            'questions' => $questions->{'data'},
+            'createdAt' => $row[2],
+        );
+        array_push($q_arr['data'], $q_item);
     }
+    echo json_encode($q_arr);
+} else {
+    echo json_encode(array('response' => 'No history found.'));
+}
+
 } else {
     //Handle error
     echo json_encode(array(

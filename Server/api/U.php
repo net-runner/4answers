@@ -30,11 +30,11 @@ $res = $rw->fetch_row();
 //If there is a user with this username
 if (!empty($res)) {
     $crA = $res[5] + $st["corrects"];
-    $fA = $res[6] + $st["failures"];
+    $fA = $res[6] + $st["answers"];
     $cP = ($crA / $fA) * 100;
     if (!($stmt = $conn->prepare("UPDATE users SET
     correctA= (?),
-    falseA=(?),
+    answers=(?),
     correctPercentage=(?)
     WHERE username=(?)"))) {
         echo json_encode("Prepare failed:  (" . $stmt->errno . ") " . $stmt->error);
@@ -60,22 +60,17 @@ if (!empty($res)) {
         $qQ = "SELECT * FROM questions WHERE id='{$id}'";
         $rws = $conn->query($qQ) or die('Cannot fetch question');
         $rwss = $rws->fetch_row();
+        $fAQ = $rwss[8] + 1;
+        $crAQ = $rwss[7];
         if (isset($ok["correct"])) {
             if ($ok["correct"]) {
                 $crAQ = $rwss[7] + 1;
-                $fAQ = $rwss[8];
-            } else {
-                $crAQ = $rwss[7];
-                $fAQ = $rwss[8] + 1;
             }
-        } else {
-            $crAQ = $rwss[7];
-            $fAQ = $rwss[8] + 1;
-        }
+        } 
         $cPQ = ($crAQ / $fAQ) * 100;
         if (!($stmt = $conn->prepare("UPDATE questions SET
         correctA= (?),
-        falseA=(?),
+        answers=(?),
         correctPercentage=(?)
         WHERE id=(?)"))) {
             echo json_encode("Prepare failed:  (" . $stmt->errno . ") " . $stmt->error);

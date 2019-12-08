@@ -23,22 +23,40 @@ if (isset($_GET['username']) and isset($_GET['password'])) {
 $conn = new mysqli('localhost', 'root', '', '4answers');
 if (!$conn) exit('Connection error');
 $testQ = "SELECT * FROM users WHERE username='{$un}'";
-$rw = $conn->query($testQ) or die('Cannot fetch user');
-$res = $rw->fetch_row();
+if (!($stmt = $conn->prepare("SELECT * FROM users WHERE username=(?)"))) {
+        echo json_encode("Prepare failed:  (" . $stmt->errno . ") " . $stmt->error);
+}
+if (!$stmt->bind_param("s", $un)) {
+   echo json_encode("Binding parameters failed: (" . $stmt->errno . ") " . $stmt->error);
+}
+if (!$stmt->execute()) {
+    echo json_encode("Execute failed: (" . $stmt->errno . ") " . $stmt->error);
+}
+$res = $stmt->get_result()->fetch_row();
 if (strlen($un) > 6 and strlen($pw) > 6) {
     //If there is not a user with this username
     if (empty($res)) {
         $hashed_password = password_hash($pw, PASSWORD_BCRYPT);
         $dt = date("Y-m-d H:i:s");
 
-        $creation_query = "INSERT INTO users (username, password, userType, registerAt, correctA, falseA, correctPercentage)
-        VALUES ('{$un}','{$hashed_password}','normal','{$dt}',1,1,100)";
-
-        $rw2 = $conn->query($creation_query) or die('Cannot add user');
+        if (!($stmt = $conn->prepare("INSERT INTO users (username, password, userType, registerAt, correctA, falseA, correctPercentage) 
+VALUES (?,?,?,?,?,?,?)"))) {
+            echo json_encode("Prepare failed:  (" . $stmt->errno . ") " . $stmt->error);
+        }
+        $a = 0;
+        $b = 0;
+        $c = 100;
+        $userType = "normal";
+        if (!$stmt->bind_param("ssssiii", $un, $hashed_password, $userType, $dt, $a, $b, $c)) {
+            echo json_encode("Binding parameters failed: (" . $stmt->errno . ") " . $stmt->error);
+        }
+        if (!$stmt->execute()) {
+            echo json_encode("Execute failed: (" . $stmt->errno . ") " . $stmt->error);
+        }
         echo json_encode(array(
             'result' => "Success.",
             'message' => "Account created.",
-            'userp' => 0,
+            'userp' => 100,
             'type' => 'normal'
         ));
     } else {
@@ -48,4 +66,9 @@ if (strlen($un) > 6 and strlen($pw) > 6) {
             'message' => "User already exists."
         ));
     }
+} else {
+    echo json_encode(array(
+        'result' => "Error.",
+        'message' => "Password or Username shorter than 6 chars"
+    ));
 }

@@ -21,10 +21,12 @@ if ($rows > 0) {
     $q_arr = array();
     $q_arr['data'] = array();
     while ($row = $rw->fetch_row()) {
+        $questions = json_decode($row[1]);
         $q_item = array(
             'qText' => $row[3],
             'qp' => $row[9],
-            'createdAt' => $row[5]
+            'createdAt' => $row[5],
+            'questions' => $questions->{'xd'}
         );
         array_push($q_arr['data'], $q_item);
     }
