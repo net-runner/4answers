@@ -6,6 +6,8 @@ import { TabPanel } from "./components/TabPanel";
 import { TestPanel } from "./screens/TestPanel";
 import { Leaderboard } from "./screens/Leaderboard";
 import { History } from "./screens/History";
+import { Management } from "./screens/Management";
+import { Creation } from "./screens/Creation";
 
 function App() {
   const [user, setUser] = useState();
@@ -40,6 +42,16 @@ function App() {
                 </TabPanel>
                 <TabPanel value={screen} index={2} style={{ flex: 9 }}>
                   <History user={user} />
+                </TabPanel>
+              </>
+            )}{" "}
+            {user.type === "admin" && (
+              <>
+                <TabPanel value={screen} index={0} style={{ flex: 9 }}>
+                  <Creation />
+                </TabPanel>
+                <TabPanel value={screen} index={1} style={{ flex: 9 }}>
+                  <Management />
                 </TabPanel>
               </>
             )}

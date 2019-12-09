@@ -79,7 +79,6 @@ export const LoginPopup = ({ user, setUser }) => {
       })
         .then(response => response.json())
         .then(data => {
-          console.log(data);
           if (data.result === "Success.") {
             localStorage.setItem(
               "user",
@@ -87,6 +86,7 @@ export const LoginPopup = ({ user, setUser }) => {
             );
             setUser({ username, userp: data.userp, type: data.type });
           } else if (data.message === "User does not exist.") {
+            console.log("REGISTRAR");
             fetch("http://localhost/4answers/server/api/register.php", {
               method: "POST",
               headers: {
@@ -100,6 +100,7 @@ export const LoginPopup = ({ user, setUser }) => {
             })
               .then(response => response.json())
               .then(data => {
+                console.log(data);
                 if (data.result === "Success.") {
                   localStorage.setItem(
                     "user",

@@ -2,13 +2,41 @@ import React, { useState, useEffect } from "react";
 import "../App.css";
 import { Elevation } from "@rmwc/elevation";
 import { Leaderquestion } from "../components/Leaderquestion";
-export const Leaderboard = () => {
+import { FaRegTrashAlt } from "react-icons/fa";
+import IconButton from "@material-ui/core/IconButton";
+export const Management = () => {
   const [Selected, setSelected] = useState(false);
   const [Users, setUsers] = useState([]);
   const [Questions, setQuestions] = useState([]);
-
+  const handleUD = us => {
+    fetch("http://localhost/4answers/server/api/du.php", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        username: us
+      })
+    })
+      .then(result => {
+        fetch("http://localhost/4answers/server/api/au.php", {
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json"
+          }
+        })
+          .then(result => result.json())
+          .catch(err => console.log(err))
+          .then(data => {
+            if (data.data) setUsers(data.data);
+          });
+      })
+      .catch(err => console.log(err));
+  };
+  const handleQD = () => {};
   useEffect(() => {
-    fetch("http://localhost/4answers/server/api/tq.php", {
+    fetch("http://localhost/4answers/server/api/aq.php", {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json"
@@ -19,7 +47,7 @@ export const Leaderboard = () => {
       .then(data => {
         if (data.data) setQuestions(data.data);
       });
-    fetch("http://localhost/4answers/server/api/tu.php", {
+    fetch("http://localhost/4answers/server/api/au.php", {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json"
@@ -75,7 +103,15 @@ export const Leaderboard = () => {
                     fontWeight: "400"
                   }}
                 >
-                  <div className=" normalText" style={{ display: "flex" }}>
+                  <div
+                    className=" normalText"
+                    style={{
+                      display: "flex",
+                      alignContent: "center",
+                      justifyContent: "center",
+                      alignItems: "center"
+                    }}
+                  >
                     {index + 1}.
                   </div>
                   <div
@@ -94,14 +130,37 @@ export const Leaderboard = () => {
                     className="flexcenter normalText"
                     style={{ display: "flex", flex: 1 }}
                   >
+                    {item.correctA}
+                  </div>
+                  <div
+                    className="flexcenter normalText"
+                    style={{ display: "flex", flex: 1 }}
+                  >
+                    {item.answers}
+                  </div>
+                  <div
+                    className="flexcenter normalText"
+                    style={{ display: "flex", flex: 1 }}
+                  >
                     {parseFloat(item.userp).toFixed(2)}%
                   </div>
+                  <IconButton onClick={() => handleUD(item.username)}>
+                    <FaRegTrashAlt color={"#673ab7"} size={28} />
+                  </IconButton>
                 </div>
               </Elevation>
             );
           })
         : Questions.map((item, index) => {
-            return <Leaderquestion item={item} index={index} key={index} />;
+            return (
+              <Leaderquestion
+                hQD={handleQD}
+                isManagement
+                item={item}
+                index={index}
+                key={index}
+              />
+            );
           })}
     </div>
   );

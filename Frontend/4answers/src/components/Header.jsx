@@ -65,7 +65,7 @@ export const Header = ({ screen, cScreen, handleLogout, user }) => {
               );
             })}
           {user.type === "admin" &&
-            ["Questions", "Users"].map((item, index) => {
+            ["Creation", "Management"].map((item, index) => {
               return (
                 <Tab
                   label={<span style={{ fontSize: "1.55vw" }}>{item}</span>}

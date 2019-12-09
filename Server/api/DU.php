@@ -21,17 +21,20 @@ if (isset($_GET['username'])) {
     $un = $data['username'];
 }
 
-$delQuery = "DELETE FROM users WHERE username='{$un}'";
-
 //Perform query
-if ($conn->query($delQuery) === TRUE) {
+$conn = new mysqli('localhost', 'root', '', '4answers');
+if (!$conn) exit('Connection error');
+if (!($stmt = $conn->prepare("DELETE FROM users WHERE username=(?)"))) {
+        echo json_encode("Prepare failed:  (" . $stmt->errno . ") " . $stmt->error);
+}
+if (!$stmt->bind_param("s", $un)) {
+   echo json_encode("Binding parameters failed: (" . $stmt->errno . ") " . $stmt->error);
+}
+if (!$stmt->execute()) {
+    echo json_encode("Execute failed: (" . $stmt->errno . ") " . $stmt->error);
+}else{
     echo json_encode(array(
         'result' => "Success",
         'message' => "User: " . $un . " has been deleted."
-    ));
-} else {
-    echo json_encode(array(
-        'result' => "Error",
-        'message' => $conn->error
     ));
 }
