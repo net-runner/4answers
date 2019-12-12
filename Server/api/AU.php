@@ -1,5 +1,5 @@
 <?php
-//GET TOP 10 USERS BY CORRECT PERCENTAGE
+//GET ALL USERS ORDERED BY CORRECT PERCENTAGE
 header('Access-Control-Allow-Origin: *');
 header('Content-Type: application/json');
 header('Access-Control-Allow-Methods: POST');
@@ -21,6 +21,8 @@ if ($rows > 0) {
     while ($row = $rw->fetch_row()) {
         $q_item = array(
             'username' => $row[1],
+            'id' => $row[0],
+            'userType' => $row[4],
             'userp' => $row[7],
             'correctA'=> $row[5],
             'answers'=> $row[6],
