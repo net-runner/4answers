@@ -44,7 +44,7 @@ if (empty($res)) {
     $cP = 100;
 
 
-    if (!($stmt = $conn->prepare("INSERT INTO questions (questions, type, qText, author, createdAt, category, correctA, answers, correctPercentage)  VALUES (?,?,?,?,?,?,?,?,?)"))) {
+    if (!($stmt = $conn->prepare("INSERT INTO questions (questions, qType, qText, author, createdAt, category, correctA, answers, correctPercentage)  VALUES (?,?,?,?,?,?,?,?,?)"))) {
         echo json_encode("Prepare failed:  (" . $stmt->errno . ") " . $stmt->error);
     }
     if (!$stmt->bind_param("sssissiii", $que, $tp, $qTex, $au, $dt, $ct, $ca, $a, $cP)) {

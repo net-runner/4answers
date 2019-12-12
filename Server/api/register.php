@@ -56,7 +56,7 @@ VALUES (?,?,?,?,?,?,?)"))) {
             'result' => "Success.",
             'message' => "Account created.",
             'userp' => 100,
-            'type' => 'normal'
+            'qType' => 'normal'
         ));
     } else {
         //Handle error

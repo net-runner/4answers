@@ -20,6 +20,7 @@ export const Management = () => {
       return 0
     }
     if (section == "answers") {
+      console.log("ANSWERSPLZ")
       if (item[section] <= 0) {
         window.alert("Correct answers cannot be lower or equal to 0")
       } else if (item[section] > 0) {

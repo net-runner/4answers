@@ -24,7 +24,7 @@ if ($rows > 0) {
         $questions = json_decode($row[1]);
         $q_item = array(
             'id' => $row[0],
-            'type' => $row[2],
+            'qType' => $row[2],
             'category' => $row[6],
             'author' => $row[4],
             'questions' => $questions->{'xd'},
