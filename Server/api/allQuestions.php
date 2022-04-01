@@ -1,18 +1,19 @@
 <?php
-require_once "../index.php";
 //Get all questions
-header('Access-Control-Allow-Origin: *');
-header('Content-Type: application/json');
+require_once "../index.php";
 
-$st = $app['db']->prepare("SELECT *
-FROM questions");
 
-$st->execute() or die('Cannot fetch questions');
-$rows = $st->num_rows;
+$sql =
+    "SELECT *
+    FROM questions";
+
+
+$rw = pg_query($conn, $sql) or die('Cannot fetch questions');
+$rows = pg_num_rows($rw);
 if ($rows > 0) {
     $q_arr = array();
     $q_arr['data'] = array();
-    while ($row = $st->fetch_row()) {
+    while ($row = pg_fetch_row($rw)) {
         $questions = json_decode($row[1]);
         $q_item = array(
             'id' => $row[0],

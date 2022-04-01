@@ -1,5 +1,5 @@
 {
-    "require": {
-        "csanquer/pdo-service-provider": "~1.1dev"
-    }
+  "require": {
+    "vlucas/phpdotenv": "^5.4"
+  }
 }
