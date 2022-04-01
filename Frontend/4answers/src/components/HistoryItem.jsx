@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "../App.css";
 import { Elevation } from "@rmwc/elevation";
 import { Question } from "./Question";
 export const HistoryItem = ({ item, index }) => {
   const [Selected, setSelected] = useState(false);
-  const [Questions, setQuestions] = useState([...item.questions]);
+  const [Questions] = useState([...item.questions]);
   return (
     <Elevation key={index} z={1} wrap>
       <div

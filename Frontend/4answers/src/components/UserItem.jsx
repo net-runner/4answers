@@ -11,7 +11,6 @@ export const UserItem = ({ item, index, hD, hE }) => {
                 className="item row"
                 style={{
                     marginTop: 20,
-                    justifyContent: "space-between",
                     alignItems: "space-between",
                     justifyContent: "space-between",
                     color: "#757575",
@@ -28,7 +27,7 @@ export const UserItem = ({ item, index, hD, hE }) => {
                     }}
                 >
                     {index + 1}.
-                  </div>
+                </div>
                 <div
                     className="flexcenter normalText"
                     style={{ display: "flex", flex: 3 }}
@@ -61,7 +60,7 @@ export const UserItem = ({ item, index, hD, hE }) => {
                     style={{ display: "flex", flex: 1, marginLeft: "20px" }}
                 >
                     {parseFloat(item.userp).toFixed(2)}%
-                  </div>
+                </div>
                 <div
                     className="flexcenter normalText"
                     style={{ display: "flex", flex: 1, marginLeft: "20px" }}

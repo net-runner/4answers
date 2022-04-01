@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import "../App.css";
 import { Question } from "../components/Question";
 import { Buttonor } from "../components/Buttonor";
@@ -20,7 +20,6 @@ export const TestPanel = ({ user, sU }) => {
     }
     return array;
   };
-  const getCategories = () => {};
   const handleFinish = () => {
     let flag = false;
     let answers = Questions.map((item, index) => {
@@ -39,9 +38,7 @@ export const TestPanel = ({ user, sU }) => {
       )
         return 0;
     setAnswer(answers);
-    let crcts = answers.filter((item, index) => {
-      if (item.correct) return item;
-    });
+    let crcts = answers.filter((item, index) => item.correct);
     setCorrects(crcts.length);
     setFinished(true);
     localStorage.removeItem("q");
@@ -84,30 +81,35 @@ export const TestPanel = ({ user, sU }) => {
       .catch(err => console.log("Error: " + err));
   };
 
-  const getQuestions = () => {
-    fetch("http://localhost/4answers/server/api/q.php", {
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json"
-      }
-    })
-      .then(result => result.json())
-      .catch(err => console.log(err))
-      .then(data => {
-        if (data.data) {
-          let datois = data.data.map((item, index) => {
-            return { ...item, questions: shuffle(item.questions) };
+  const getQuestions =
+    useCallback(
+      () => {
+        fetch("http://localhost/4answers/server/api/q.php", {
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json"
+          }
+        })
+          .then(result => result.json())
+          .catch(err => console.log(err))
+          .then(data => {
+            if (data.data) {
+              let datois = data.data.map((item, index) => {
+                return { ...item, questions: shuffle(item.questions) };
+              });
+              setQuestions(datois);
+              localStorage.setItem(
+                "q",
+                JSON.stringify({
+                  questions: datois
+                })
+              );
+            }
           });
-          setQuestions(datois);
-          localStorage.setItem(
-            "q",
-            JSON.stringify({
-              questions: datois
-            })
-          );
-        }
-      });
-  };
+      },
+      [],
+    )
+
   useEffect(() => {
     let xd = localStorage.getItem("q");
     if (xd !== "undefined" && xd !== null) {
@@ -115,7 +117,7 @@ export const TestPanel = ({ user, sU }) => {
     } else {
       getQuestions();
     }
-  }, []);
+  }, [getQuestions]);
   const Again = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
     setTimeout(() => {

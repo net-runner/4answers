@@ -15,9 +15,7 @@ export const Question = ({
 }) => {
   const og = ["A", "B", "C", "D"];
   const [Questions, setQuestions] = useState();
-  const Correct = data.questions.filter((item, index) => {
-    if (item.correct) return item;
-  });
+  const Correct = data.questions.filter((item, index) => item.correct);
   const hE = (value, ind) => {
     let elonbina = [...qS]
     elonbina[0].questions[ind].value = value
@@ -64,7 +62,7 @@ export const Question = ({
       let Q = [...data.questions];
       setQuestions(Q);
     }
-  }, []);
+  }, [data.questions, fin, index]);
   const Qer = ({ item, indor }) => {
     if (!isLeaderboard) {
       if (qS[index].selected === indor && !fin) {

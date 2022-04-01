@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "../App.css";
-import { Elevation } from "@rmwc/elevation";
 import { Leaderquestion } from "../components/Leaderquestion";
-import { FaRegTrashAlt } from "react-icons/fa";
-import IconButton from "@material-ui/core/IconButton";
 import { UserItem } from "../components/UserItem"
 
 export const Management = () => {
@@ -15,11 +12,11 @@ export const Management = () => {
     console.log(item)
     console.log(value)
     console.log(section)
-    if (value == "") {
+    if (value === "") {
       window.alert("Value cannot be null")
       return 0
     }
-    if (section == "answers") {
+    if (section === "answers") {
       console.log("ANSWERSPLZ")
       if (item[section] <= 0) {
         window.alert("Correct answers cannot be lower or equal to 0")
@@ -202,11 +199,11 @@ export const Management = () => {
     }
   }
   const handleUE = (item, value, section) => {
-    if (value == "") {
+    if (value === "") {
       window.alert("Value cannot be null")
       return 0
     }
-    if (section == "answers") {
+    if (section === "answers") {
       if (item[section] <= 0) {
         window.alert("Correct answers cannot be lower or equal to 0")
       } else if (item[section] > 0) {

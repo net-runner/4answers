@@ -38,7 +38,7 @@ export const Inp = ({ color, valium, cqS, indor, isUser, TA, us, small, isQ, dat
                     type="text"
                     value={estQ}
                     onBlur={() => {
-                        if (estQ == "") {
+                        if (estQ === "") {
                             window.alert("Input cannot be null")
                         } else {
                             if (isUser) {

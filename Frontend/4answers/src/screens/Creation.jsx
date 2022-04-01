@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "../App.css";
 import { Question } from "../components/Question";
 import { Buttonor } from "../components/Buttonor";
@@ -20,15 +20,15 @@ export const Creation = () => {
     const [errorum, setErrorum] = useState(false)
     const AQ = () => {
         let qute = Questions[0]
-        if (qute.qText == ""
+        if (qute.qText === ""
             ||
-            qute.questions[0].value == ""
+            qute.questions[0].value === ""
             ||
-            qute.questions[1].value == ""
+            qute.questions[1].value === ""
             ||
-            qute.questions[2].value == ""
+            qute.questions[2].value === ""
             ||
-            qute.questions[3].value == "") {
+            qute.questions[3].value === "") {
             setErrorum("There are some empty spots in your question")
             setTimeout(() => {
                 setErrorum(null)

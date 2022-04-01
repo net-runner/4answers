@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "../App.css";
 import { Elevation } from "@rmwc/elevation";
 import IconButton from "@material-ui/core/IconButton";
