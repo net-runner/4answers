@@ -13,20 +13,20 @@ $sql =
     FROM users ORDER BY correctPercentage DESC";
 
 
-$rw = $conn->query($sql) or die('Cannot fetch users');
-$rows = $rw->num_rows;
+$rw = pg_query($conn, $sql) or die('Cannot fetch questions');
+$rows = pg_num_rows($rw);
 if ($rows > 0) {
     $q_arr = array();
     $q_arr['data'] = array();
-    while ($row = $rw->fetch_row()) {
+    while ($row = pg_fetch_row($rw)) {
         $q_item = array(
             'username' => $row[1],
             'id' => $row[0],
             'userType' => $row[4],
             'userp' => $row[7],
-            'correctA'=> $row[5],
-            'answers'=> $row[6],
-            'correctPercentage'=>$row[7],
+            'correctA' => $row[5],
+            'answers' => $row[6],
+            'correctPercentage' => $row[7],
             'registerAt' => $row[3],
         );
         array_push($q_arr['data'], $q_item);

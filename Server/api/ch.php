@@ -19,23 +19,15 @@ if (isset($_GET['username']) and isset($_GET['password'])) {
     $un = $data['username'];
     $pw = $data['questions'];
 }
-$conn = new mysqli('localhost', 'root', '', '4answers');
-if (!$conn) exit('Connection error');
-$testQ = "SELECT * FROM users WHERE username='{$un}'";
-$rw = $conn->query($testQ) or die('Cannot fetch user');
-$res = $rw->fetch_row();
+$sql = "SELECT * FROM users WHERE username='{$un}'";
+$rw = pg_query($conn, $sql) or die('Cannot fetch questions');
+$rows = pg_num_rows($rw);
 
 if (!empty($res)) {
     $dt = date("Y-m-d H:i:s");
     $qt = json_encode($pw);
-    if (!($stmt = $conn->prepare("INSERT INTO history (userId, questions, createdAt)  VALUES (?,?,?)"))) {
+    if (!(pg_query_params($conn, "INSERT INTO history (userId, questions, createdAt)  VALUES ($1,$2,$3)", array($res[0], $qt, $dt)))) {
         echo json_encode("Prepare failed:  (" . $stmt->errno . ") " . $stmt->error);
-    }
-    if (!$stmt->bind_param("iss", $res[0], $qt, $dt)) {
-        echo json_encode("Binding parameters failed: (" . $stmt->errno . ") " . $stmt->error);
-    }
-    if (!$stmt->execute()) {
-        echo json_encode("Execute failed: (" . $stmt->errno . ") " . $stmt->error);
     }
 } else {
     //Handle error
