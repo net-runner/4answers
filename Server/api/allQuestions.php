@@ -1,22 +1,18 @@
 <?php
+require_once "../index.php";
 //Get all questions
 header('Access-Control-Allow-Origin: *');
 header('Content-Type: application/json');
 
-$conn = new mysqli('localhost', 'root', '', '4answers');
-if (!$conn) exit('Connection error');
+$st = $app['db']->prepare("SELECT *
+FROM questions");
 
-$sql =
-    "SELECT *
-    FROM questions";
-
-
-$rw = $conn->query($sql) or die('Cannot fetch questions');
-$rows = $rw->num_rows;
+$st->execute() or die('Cannot fetch questions');
+$rows = $st->num_rows;
 if ($rows > 0) {
     $q_arr = array();
     $q_arr['data'] = array();
-    while ($row = $rw->fetch_row()) {
+    while ($row = $st->fetch_row()) {
         $questions = json_decode($row[1]);
         $q_item = array(
             'id' => $row[0],

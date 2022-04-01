@@ -1,4 +1,5 @@
 <?php
+require_once "../index.php";
 //Register endpoint
 
 //Adding headers
