@@ -26,6 +26,10 @@ if (!$conn) exit('Connection error');
 $result = pg_query_params($conn, "SELECT * FROM users WHERE username=$1", $un);
 
 $res = pg_fetch_row($result);
+echo json_encode(array(
+    'result' => "Error",
+    'message' => $res[2]
+));
 //If there is a user with this username
 if (!empty($result)) {
     if (password_verify($pw, $res[2])) {
