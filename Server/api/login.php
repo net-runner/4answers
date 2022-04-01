@@ -23,15 +23,18 @@ if (isset($_GET['username']) and isset($_GET['password'])) {
 $dbopts = parse_url(getenv('DATABASE_URL'));
 $conn = pg_connect("host=" . $dbopts["host"] . " dbname=" . ltrim($dbopts["path"], '/') . " user=" . $dbopts["user"] . " password=" . $dbopts["pas"] . " port=" . $dbopts["port"]);
 if (!$conn) exit('Connection error');
-$result = pg_query_params($conn, "SELECT * FROM users WHERE username=$1", $un);
-
-$res = pg_fetch_row($result);
-echo json_encode(array(
-    'result' => "Error",
-    'message' => $res[2]
-));
+if (!($stmt = $conn->prepare("SELECT * FROM users WHERE username=(?)"))) {
+    echo json_encode("Prepare failed:  (" . $stmt->errno . ") " . $stmt->error);
+}
+if (!$stmt->bind_param("s", $un)) {
+    echo json_encode("Binding parameters failed: (" . $stmt->errno . ") " . $stmt->error);
+}
+if (!$stmt->execute()) {
+    echo json_encode("Execute failed: (" . $stmt->errno . ") " . $stmt->error);
+}
+$res = $stmt->get_result()->fetch_row();
 //If there is a user with this username
-if (!empty($result)) {
+if (!empty($res)) {
     if (password_verify($pw, $res[2])) {
         echo json_encode(array(
             'result' => "Success.",
