@@ -8,8 +8,6 @@ header('Access-Control-Allow-Methods: POST');
 header('Access-Control-Allow-Headers: Access-Control-Allow-Headers, Content-Type, Access-Control-Allow-Methods, Authorization, X-Requested-With');
 
 //Database connection
-$conn = new mysqli('localhost', 'root', '', '4answers');
-if (!$conn) exit('Connection error');
 
 //Get posted data
 if (isset($_GET['question'])) {
@@ -22,19 +20,12 @@ if (isset($_GET['question'])) {
 }
 
 //Perform query
-$conn = new mysqli('localhost', 'root', '', '4answers');
-if (!$conn) exit('Connection error');
-if (!($stmt = $conn->prepare("DELETE FROM questions WHERE qText=(?)"))) {
-        echo json_encode("Prepare failed:  (" . $stmt->errno . ") " . $stmt->error);
+$sql = "DELETE FROM questions WHERE qText=$1";
+
+if (!pg_query_params($conn, $sql, array($qt))) {
+    echo json_encode("Binding parameters failed: (" . $stmt->errno . ") " . $stmt->error);
 }
-if (!$stmt->bind_param("s", $qt)) {
-   echo json_encode("Binding parameters failed: (" . $stmt->errno . ") " . $stmt->error);
-}
-if (!$stmt->execute()) {
-    echo json_encode("Execute failed: (" . $stmt->errno . ") " . $stmt->error);
-}else{
-    echo json_encode(array(
-        'result' => "Success",
-        'message' => "Question: " . $qt . " has been deleted."
-    ));
-}
+echo json_encode(array(
+    'result' => "Success",
+    'message' => "Question: " . $qt . " has been deleted."
+));

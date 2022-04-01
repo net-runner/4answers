@@ -21,29 +21,24 @@ if (isset($_GET['username']) and isset($_GET['stats'])) {
     $an = $data['answers'];
 }
 //Handle basic db connection
-$conn = new mysqli('localhost', 'root', '', '4answers');
-if (!$conn) exit('Connection error');
-$testQ = "SELECT * FROM users WHERE username='{$un}'";
-$rw = $conn->query($testQ) or die('Cannot fetch user');
-$res = $rw->fetch_row();
+
+$sql = "SELECT * FROM users WHERE username=$1";
+$result = pg_query_params($conn, $sql, array($un));
+$res = pg_fetch_row($result);
 
 //If there is a user with this username
 if (!empty($res)) {
     $crA = $res[5] + $st["corrects"];
     $fA = $res[6] + $st["answers"];
     $cP = ($crA / $fA) * 100;
-    if (!($stmt = $conn->prepare("UPDATE users SET
-    correctA= (?),
-    answers=(?),
-    correctPercentage=(?)
-    WHERE username=(?)"))) {
+
+    $sql2 = "UPDATE users SET
+    correctA= $1,
+    answers=$2,
+    correctPercentage=$3
+    WHERE username=$4";
+    if (!(pg_query_params($conn, $sql2, array($crA, $fA, $cP, $un)))) {
         echo json_encode("Prepare failed:  (" . $stmt->errno . ") " . $stmt->error);
-    }
-    if (!$stmt->bind_param("iids", $crA, $fA, $cP, $un)) {
-        echo json_encode("Binding parameters failed: (" . $stmt->errno . ") " . $stmt->error);
-    }
-    if (!$stmt->execute()) {
-        echo json_encode("Execute failed: (" . $stmt->errno . ") " . $stmt->error);
     }
     echo json_encode(array(
         'result' => "Success",
@@ -57,29 +52,25 @@ if (!empty($res)) {
     while ($i < count($an)) {
         $ok  = $an[$i];
         $id = $ok["id"];
-        $qQ = "SELECT * FROM questions WHERE id='{$id}'";
-        $rws = $conn->query($qQ) or die('Cannot fetch question');
-        $rwss = $rws->fetch_row();
+        $qQ = "SELECT * FROM questions WHERE id=$1";
+        $rws = pg_query_params($conn, $qQ, array($qQ)) or die('Cannot fetch question');
+        $rwss = pg_fetch_row($rws);
         $fAQ = $rwss[8] + 1;
         $crAQ = $rwss[7];
         if (isset($ok["correct"])) {
             if ($ok["correct"]) {
                 $crAQ = $rwss[7] + 1;
             }
-        } 
+        }
         $cPQ = ($crAQ / $fAQ) * 100;
-        if (!($stmt = $conn->prepare("UPDATE questions SET
-        correctA= (?),
-        answers=(?),
-        correctPercentage=(?)
-        WHERE id=(?)"))) {
+
+        $sql3 = "UPDATE questions SET
+        correctA= $1,
+        answers=$2,
+        correctPercentage=$3
+        WHERE id=$4";
+        if (!(pg_query_params($conn, $sql3, array($crAQ, $fAQ, $cPQ, $id)))) {
             echo json_encode("Prepare failed:  (" . $stmt->errno . ") " . $stmt->error);
-        }
-        if (!$stmt->bind_param("iidi", $crAQ, $fAQ, $cPQ, $id)) {
-            echo json_encode("Binding parameters failed: (" . $stmt->errno . ") " . $stmt->error);
-        }
-        if (!$stmt->execute()) {
-            echo json_encode("Execute failed: (" . $stmt->errno . ") " . $stmt->error);
         }
         $i++;
     }

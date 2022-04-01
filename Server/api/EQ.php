@@ -21,43 +21,35 @@ if (isset($_GET['username']) and isset($_GET['section']) and isset($_GET['value'
     $va = $data['value'];
 }
 //Handle basic db connection
-$conn = new mysqli('localhost', 'root', '', '4answers');
-if (!$conn) exit('Connection error');
-$testQ = "SELECT * FROM questions WHERE id='{$un}'";
-$rw = $conn->query($testQ) or die('Cannot fetch user');
-$res = $rw->fetch_row();
 
+$sql = "SELECT * FROM questions WHERE id=$1";
+$result = pg_query_params($conn, $sql, array($un));
+$res = pg_fetch_row($result);
 //If there is a user with this username
 if (!empty($res)) {
     $crA = $res[7];
     $fA = $res[8];
-    if($se == "answers"){
+    if ($se == "answers") {
         $cP = ($crA / $va) * 100;
-    }else if($se == "correctA"){
+    } else if ($se == "correctA") {
         $cP = ($va / $fA) * 100;
-    }else{
+    } else {
         $cP = $res[9];
     }
-    if($se == "questions"){
+    if ($se == "questions") {
         $elonba["xd"] = $va;
         $va = json_encode($elonba);
     }
-    if (!($stmt = $conn->prepare("UPDATE questions SET
-    {$se}=(?), correctPercentage=(?)
-    WHERE id=(?)"))) {
+    $sql2 = "UPDATE questions SET
+    $1=$2, correctPercentage=$3
+    WHERE id=$4";
+    if (!(pg_query_params($conn, $sql2, array($se, $va, $cP, $un)))) {
         echo json_encode("Prepare failed:  (" . $stmt->errno . ") " . $stmt->error);
-    }
-    if (!$stmt->bind_param("sis", $va,$cP, $un)) {
-        echo json_encode("Binding parameters failed: (" . $stmt->errno . ") " . $stmt->error);
-    }
-    if (!$stmt->execute()) {
-        echo json_encode("Execute failed: (" . $stmt->errno . ") " . $stmt->error);
     }
     echo json_encode(array(
         'result' => "Success",
         'message' => "Question edited.",
     ));
-    
 } else {
     //Handle error
     echo json_encode(array(

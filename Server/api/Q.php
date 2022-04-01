@@ -15,12 +15,12 @@ $sql =
     LIMIT 10";
 
 
-$rw = $conn->query($sql) or die('Cannot fetch questions');
-$rows = $rw->num_rows;
+$rw = pg_query($conn, $sql) or die('Cannot fetch questions');
+$rows = pg_num_rows($rw);
 if ($rows > 0) {
     $q_arr = array();
     $q_arr['data'] = array();
-    while ($row = $rw->fetch_row()) {
+    while ($row = pg_fetch_row($rw)) {
         $questions = json_decode($row[1]);
         $q_item = array(
             'id' => $row[0],
