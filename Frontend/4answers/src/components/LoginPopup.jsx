@@ -66,7 +66,7 @@ export const LoginPopup = ({ user, setUser }) => {
       setpError(true);
     }
     if (!uError && !pError) {
-      fetch("http://localhost/4answers/server/api/login.php", {
+      fetch("https://for-answers.herokuapp.com/api/login.php", {
         method: "POST",
         headers: {
           Accept: "application/json",
@@ -87,7 +87,7 @@ export const LoginPopup = ({ user, setUser }) => {
             setUser({ username, userp: data.userp, type: data.type });
           } else if (data.message === "User does not exist.") {
             console.log("REGISTRAR");
-            fetch("http://localhost/4answers/server/api/register.php", {
+            fetch("https://for-answers.herokuapp.com/api/register.php", {
               method: "POST",
               headers: {
                 Accept: "application/json",
