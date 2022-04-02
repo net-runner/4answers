@@ -23,7 +23,7 @@ export const History = ({ user }) => {
         if (data) {
           let datois = data.map((item, index) => {
 
-            var dec_data = JSON.parse(decodeURIComponent(item.questions))
+            var dec_data = JSON.parse(item.questions)
             let questions = dec_data;
             console.log(questions);
             let corrects = questions.filter((item, index) => item.correct);
