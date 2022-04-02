@@ -27,12 +27,18 @@ if (!empty($res)) {
         $q_arr = array();
         $q_arr['data'] = array();
         while ($row = pg_fetch_row($rw)) {
+
             $questions = json_decode($row[3]);
-            $q_item = array(
-                'questions' => $questions->{'data'},
-                'createdAt' => $row[2],
-            );
-            array_push($q_arr['data'], $q_item);
+            if (!empty($questions)) {
+                $q_item = array(
+                    'questions' => $questions,
+                    'createdAt' => $row[2],
+                );
+                array_push($q_arr['data'], $q_item);
+            } else {
+                echo json_encode(array('response' => 'No history found.'));
+                exit();
+            }
         }
         echo json_encode($q_arr);
     } else {

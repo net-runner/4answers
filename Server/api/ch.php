@@ -27,6 +27,10 @@ if (!empty($res)) {
     if (!(pg_insert($conn, "history", $data))) {
         echo json_encode("Prepare failed:  (" . $stmt->errno . ") " . $stmt->error);
     }
+    echo json_encode(array(
+        'result' => "Success.",
+        'message' => "User history updated."
+    ));
 } else {
     //Handle error
     echo json_encode(array(
