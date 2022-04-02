@@ -33,36 +33,38 @@ if (!empty($res)) {
     if (!(pg_update($conn, "users", $ar, $conds))) {
         echo json_encode("Prepare failed:  (" . $stmt->errno . ") " . $stmt->error);
     }
-    echo json_encode(array(
-        'result' => "Success",
-        'message' => "User stats updated.",
-        'corrects' => $crA,
-        'failures' => $fA,
-        'cP' => $cP
-    ));
     //Update stats for questions
     $i = 0;
     while ($i < count($an)) {
         $ok  = $an[$i];
         $id = $ok["id"];
         $co = array("id" => $id);
-        $resoult = pg_select($conn, "questions", $co);
-        $rwss = pg_fetch_row($resoult);
-        $fAQ = $rwss[8] + 1;
-        $crAQ = $rwss[7];
-        if (isset($ok["correct"])) {
-            if ($ok["correct"]) {
-                $crAQ = $rwss[7] + 1;
+        $rwss = pg_select($conn, "questions", $co);
+        $rwss = $rwss[0];
+        if ($rwss) {
+            $fAQ = $rwss["answers"] + 1;
+            $crAQ = $rwss["correctA"];
+            if (isset($ok["correct"])) {
+                if ($ok["correct"]) {
+                    $crAQ  += 1;
+                }
             }
+            $cPQ = ($crAQ / $fAQ) * 100;
+            $ar2 = array("correctA" => $crAQ, "answers" => $fAQ, "correctPercentage" => $cPQ);
+            if (!(pg_update($conn, "questions", $ar2, $co))) {
+                echo json_encode("Prepare failed");
+            }
+        } else {
+            echo json_encode(var_dump($rwss));
         }
-        $cPQ = ($crAQ / $fAQ) * 100;
-        $ar2 = array("correctA" => $crAQ, "answers" => $fAQ, "correctpPercentage" => $cPQ);
-        $conds2 = array("id" => $id);
-        if (!(pg_update($conn, "questions", $ar2, $conds))) {
-            echo json_encode("Prepare failed:  (" . $stmt->errno . ") " . $stmt->error);
-        }
+
+
         $i++;
     }
+    echo json_encode(array(
+        'result' => "Success",
+        'message' => "Stats updated."
+    ));
 } else {
     //Handle error
     echo json_encode(array(
