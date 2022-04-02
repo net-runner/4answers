@@ -97,17 +97,19 @@ export const TestPanel = ({ user, sU }) => {
           .then(result => result.json())
           .catch(err => console.log(err))
           .then(data => {
-            if (data?.data) {
-              let datois = data.data.map((item, index) => {
-                return { ...item, questions: shuffle(item.questions) };
-              });
-              setQuestions(datois);
-              localStorage.setItem(
-                "q",
-                JSON.stringify({
-                  questions: datois
-                })
-              );
+            if (data) {
+              if (data.data) {
+                let datois = data.data.map((item, index) => {
+                  return { ...item, questions: shuffle(item.questions) };
+                });
+                setQuestions(datois);
+                localStorage.setItem(
+                  "q",
+                  JSON.stringify({
+                    questions: datois
+                  })
+                );
+              }
             }
           });
       },
