@@ -32,7 +32,7 @@ if (strlen($un) >= 6 and strlen($pw) >= 6) {
             'result' => "Success.",
             'message' => "Account created.",
             'userp' => 100,
-            'qType' => 'normal'
+            'type' => 'normal'
         ));
     } else {
         //Handle error

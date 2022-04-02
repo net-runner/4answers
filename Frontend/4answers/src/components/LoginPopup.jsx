@@ -83,11 +83,10 @@ export const LoginPopup = ({ user, setUser }) => {
           if (data.result === "Success.") {
             localStorage.setItem(
               "user",
-              JSON.stringify({ username, userp: data.userp, type: data.type })
+              JSON.stringify({ username, userp: data.userp, type: "normal" })
             );
-            setUser({ username, userp: data.userp, type: data.type });
+            setUser({ username, userp: data.userp, type: "normal" });
           } else if (data.message === "User does not exist.") {
-            console.log("REGISTRAR");
             fetch(SERVER_URL + "register.php", {
               method: "POST",
               headers: {
@@ -111,7 +110,7 @@ export const LoginPopup = ({ user, setUser }) => {
                       type: data.type
                     })
                   );
-                  setUser({ username, userp: data.userp, type: data.type });
+                  setUser({ username, userp: data.userp, type: "normal" });
                 }
               });
           } else if (data.message === "Passwords does not match.") {
