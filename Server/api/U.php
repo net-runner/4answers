@@ -27,7 +27,7 @@ if (!empty($res)) {
     $crA = $res[5] + $st["corrects"];
     $fA = $res[6] + $st["answers"];
     $cP = ($crA / $fA) * 100;
-    $ar = array("correctA" => $crA, "answers" => $fA, "correctpPercentage" => $cP);
+    $ar = array("correctA" => $crA, "answers" => $fA, "correctPercentage" => $cP);
     $conds = array("username" => $un);
 
     if (!(pg_update($conn, "users", $ar, $conds))) {
