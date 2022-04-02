@@ -43,7 +43,7 @@ export const TestPanel = ({ user, sU }) => {
     setCorrects(crcts.length);
     setFinished(true);
     localStorage.removeItem("q");
-    fetch(SERVER_URL + "u.php", {
+    fetch(SERVER_URL + "U.php", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -66,7 +66,7 @@ export const TestPanel = ({ user, sU }) => {
         localStorage.setItem("user", JSON.stringify(xd));
       })
       .catch(err => console.log("Error: " + err));
-    fetch(SERVER_URL + "ch.php", {
+    fetch(SERVER_URL + "CH.php", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -85,7 +85,7 @@ export const TestPanel = ({ user, sU }) => {
   const getQuestions =
     useCallback(
       () => {
-        fetch(SERVER_URL + "q.php", {
+        fetch(SERVER_URL + "Q.php", {
           headers: {
             Accept: "application/json",
             "Content-Type": "application/json"

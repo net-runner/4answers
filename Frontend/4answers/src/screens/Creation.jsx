@@ -51,7 +51,7 @@ export const Creation = () => {
             }, 3000);
         }
         else {
-            fetch(SERVER_URL + "cq.php", {
+            fetch(SERVER_URL + "CQ.php", {
                 method: "POST",
                 headers: {
                     Accept: "application/json",

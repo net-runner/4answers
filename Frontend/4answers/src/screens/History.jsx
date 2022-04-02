@@ -5,7 +5,7 @@ import { HistoryItem } from "../components/HistoryItem";
 export const History = ({ user }) => {
   const [History, setHistory] = useState([]);
   useEffect(() => {
-    fetch(SERVER_URL + "h.php", {
+    fetch(SERVER_URL + "H.php", {
       method: "POST",
       headers: {
         Accept: "application/json",

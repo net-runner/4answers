@@ -9,7 +9,7 @@ export const Leaderboard = () => {
   const [Questions, setQuestions] = useState([]);
 
   useEffect(() => {
-    fetch(SERVER_URL + "tq.php", {
+    fetch(SERVER_URL + "TQ.php", {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json"
@@ -20,7 +20,7 @@ export const Leaderboard = () => {
       .then(data => {
         if (data.data) setQuestions(data.data);
       });
-    fetch(SERVER_URL + "tu.php", {
+    fetch(SERVER_URL + "TU.php", {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json"
