@@ -28,11 +28,9 @@ if (!empty($res)) {
         $q_arr = array();
         $q_arr['data'] = array();
         while ($row = pg_fetch_row($rw)) {
-
-            $questions = json_decode($row[3]);
-            if (!empty($questions)) {
+            if (!empty($row[3])) {
                 $q_item = array(
-                    'questions' => $questions,
+                    'questions' => $row[3],
                     'createdAt' => $row[2],
                 );
 
