@@ -86,6 +86,7 @@ export const TestPanel = ({ user, sU }) => {
     useCallback(
       () => {
         fetch(SERVER_URL + "Q.php", {
+          method: "GET",
           headers: {
             Accept: "application/json",
             "Content-Type": "application/json"
