@@ -1,4 +1,5 @@
 <?php
+require_once "../index.php";
 //GET ALL USERS ORDERED BY CORRECT PERCENTAGE
 header('Access-Control-Allow-Origin: *');
 header('Content-Type: application/json');

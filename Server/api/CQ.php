@@ -1,4 +1,5 @@
 <?php
+require_once "../index.php";
 //CREATE QUESTION ENDPOINT
 header('Access-Control-Allow-Origin: *');
 header('Content-Type: application/json');

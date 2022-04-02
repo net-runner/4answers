@@ -1,4 +1,5 @@
 <?php
+require_once "../index.php";
 //Update history endpoint
 //Adding headers
 header('Access-Control-Allow-Origin: *');

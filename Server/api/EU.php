@@ -1,4 +1,5 @@
 <?php
+require_once "../index.php";
 //Update user endpoint
 
 //Adding headers
@@ -40,9 +41,6 @@ if (!empty($res)) {
     $sql2 = "UPDATE users SET
     $1=$2, correctPercentage=$3
     WHERE username=$4";
-    if (!($stmt = $conn->prepare())) {
-        echo json_encode("Prepare failed:  (" . $stmt->errno . ") " . $stmt->error);
-    }
     if (!(pg_query_params($conn, $sql2, array($se, $va, $cP, $un)))) {
         echo json_encode("Prepare failed:  (" . $stmt->errno . ") " . $stmt->error);
     }
