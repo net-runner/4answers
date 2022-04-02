@@ -30,6 +30,7 @@ export const History = ({ user }) => {
         }
       });
   }, [user.username]);
+  console.log(History);
   return (
     <div className="column" style={{}}>
       {History.map((item, index) => {

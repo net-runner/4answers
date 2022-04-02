@@ -60,8 +60,8 @@ export const TestPanel = ({ user, sU }) => {
     })
       .then(response => response.json())
       .then(data => {
-        Console.log("U---")
-        Console.log(data);
+        console.log("U---");
+        console.log(data);
         let xd = { ...user };
         xd.userp = data.cP;
         sU(xd);
