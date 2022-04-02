@@ -1,5 +1,5 @@
 <?php
-require_once "../index.php";
+require "../index.php";
 //Update stats endpoint
 
 //Adding headers

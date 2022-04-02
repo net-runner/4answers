@@ -1,5 +1,5 @@
 <?php
-require_once "../index.php";
+require "../index.php";
 //Update history endpoint
 //Adding headers
 header('Access-Control-Allow-Methods: POST');

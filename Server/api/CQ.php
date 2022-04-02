@@ -1,5 +1,5 @@
 <?php
-require_once "../index.php";
+require "../index.php";
 //CREATE QUESTION ENDPOINT
 header('Access-Control-Allow-Methods: POST');
 header('Access-Control-Allow-Headers: Access-Control-Allow-Headers, Content-Type, Access-Control-Allow-Methods, Authorization, X-Requested-With');

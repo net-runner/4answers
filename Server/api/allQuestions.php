@@ -1,7 +1,6 @@
 <?php
 //Get all questions
-require_once "../index.php";
-
+require "../index.php";
 
 $sql =
     "SELECT *

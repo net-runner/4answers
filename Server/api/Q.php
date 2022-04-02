@@ -1,6 +1,6 @@
 <?php
 //Get random 10 questions
-require_once "../index.php";
+require "../index.php";
 header('Access-Control-Allow-Methods: GET');
 header('Access-Control-Allow-Headers: Access-Control-Allow-Headers, Content-Type, Access-Control-Allow-Methods, Authorization, X-Requested-With');
 

@@ -1,5 +1,5 @@
 <?php
-require_once "../index.php";
+require "../index.php";
 //Endpoint for user deletion
 
 //Adding headers
