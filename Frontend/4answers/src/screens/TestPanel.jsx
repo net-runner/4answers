@@ -66,7 +66,7 @@ export const TestPanel = ({ user, sU }) => {
         localStorage.setItem("user", JSON.stringify(xd));
       })
       .catch(err => console.log("Error: " + err));
-    fetch(SERVER_URL + "CH.php", {
+    fetch(SERVER_URL + "ch.php", {
       method: "POST",
       headers: {
         Accept: "application/json",
