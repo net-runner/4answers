@@ -23,21 +23,20 @@ if (!empty($res)) {
     $sql = 'SELECT * FROM history WHERE history."userId" = $1 ORDER BY history."createdAt" DESC';
     $rw = pg_query_params($conn, $sql, array($id));
     $rows = pg_num_rows($rw);
+
     if ($rows > 0) {
         $q_arr = array();
         $q_arr['data'] = array();
         while ($row = pg_fetch_row($rw)) {
 
-            $questions = json_decode($row[3]);
+            $questions = $row[3];
             if (!empty($questions)) {
                 $q_item = array(
                     'questions' => $questions,
                     'createdAt' => $row[2],
                 );
+
                 array_push($q_arr['data'], $q_item);
-            } else {
-                echo json_encode(array('response' => 'No history found.'));
-                exit();
             }
         }
         echo json_encode($q_arr);
