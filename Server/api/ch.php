@@ -23,7 +23,8 @@ $res = $db->fetchUser($un);
 if (!empty($res)) {
     $dt = date("Y-m-d H:i:s");
     $qt = json_encode($pw);
-    if (!(pg_query_params($conn, "INSERT INTO history (userId, questions, createdAt)  VALUES ($1,$2,$3)", array($res[0], $qt, $dt)))) {
+    $data = array("userId" => $res[0], "questions" => $qt, "createdAt" => $dt);
+    if (!(pg_insert($conn, "history", $data))) {
         echo json_encode("Prepare failed:  (" . $stmt->errno . ") " . $stmt->error);
     }
 } else {

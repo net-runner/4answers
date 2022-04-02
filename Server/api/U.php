@@ -45,8 +45,8 @@ if (!empty($res)) {
     while ($i < count($an)) {
         $ok  = $an[$i];
         $id = $ok["id"];
-        $qQ = 'SELECT * FROM public.questions WHERE questions."id"=$1';
-        $rws = pg_query_params($conn, $qQ, array($qQ));
+        $co = array("id" => $id);
+        $resoult = pg_select($conn, "questions", $co);
         $rwss = pg_fetch_row($rws);
         $fAQ = $rwss[8] + 1;
         $crAQ = $rwss[7];
@@ -58,11 +58,6 @@ if (!empty($res)) {
         $cPQ = ($crAQ / $fAQ) * 100;
         $ar2 = array("correctA" => $crAQ, "answers" => $fAQ, "correctpPercentage" => $cPQ);
         $conds2 = array("id" => $id);
-        $sql3 = 'UPDATE public.questions SET
-        correctA= \'$1\',
-        answers=\'$2\',
-        correctPercentage=\'$3\'
-        WHERE questions."id"=\'$4\'';
         if (!(pg_update($conn, "questions", $ar2, $conds))) {
             echo json_encode("Prepare failed:  (" . $stmt->errno . ") " . $stmt->error);
         }
