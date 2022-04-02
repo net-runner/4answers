@@ -29,8 +29,7 @@ export const History = ({ user }) => {
           setHistory(datois);
         }
       });
-  }, [user.username]);
-  console.log(History);
+  }, [user]);
   return (
     <div className="column" style={{}}>
       {History.map((item, index) => {

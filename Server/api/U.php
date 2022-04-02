@@ -63,7 +63,8 @@ if (!empty($res)) {
     }
     echo json_encode(array(
         'result' => "Success",
-        'message' => "Stats updated."
+        'message' => "Stats updated.",
+        'cP' => $cPQ
     ));
 } else {
     //Handle error
