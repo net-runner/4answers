@@ -97,7 +97,7 @@ export const TestPanel = ({ user, sU }) => {
           .then(result => result.json())
           .catch(err => console.log(err))
           .then(data => {
-            if (data.data) {
+            if (data?.data) {
               let datois = data.data.map((item, index) => {
                 return { ...item, questions: shuffle(item.questions) };
               });
