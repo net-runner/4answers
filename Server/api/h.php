@@ -26,15 +26,13 @@ if (!empty($res)) {
 
     if ($rows > 0) {
         $q_arr = array();
-        $q_arr['data'] = array();
         while ($row = pg_fetch_row($rw)) {
             if (!empty($row[3])) {
                 $q_item = array(
                     'questions' => $row[3],
                     'createdAt' => $row[2],
                 );
-
-                array_push($q_arr['data'], $q_item);
+                array_push($q_arr, $q_item);
             }
         }
         echo json_encode($q_arr);

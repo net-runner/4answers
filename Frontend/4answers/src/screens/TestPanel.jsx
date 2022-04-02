@@ -76,7 +76,7 @@ export const TestPanel = ({ user, sU }) => {
       },
       body: JSON.stringify({
         username: user.username,
-        questions: { data: encodeURIComponent(JSON.stringify(Questions)) }
+        questions: encodeURIComponent(JSON.stringify(Questions))
       })
     })
       .then(response => response.json())

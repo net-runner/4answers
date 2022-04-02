@@ -19,11 +19,11 @@ export const History = ({ user }) => {
       .catch(err => console.log(err))
       .then(data => {
         console.log("H---");
+        console.log(data)
         if (data.data) {
-
           let datois = data.data.map((item, index) => {
-            console.log(item.questions.data)
-            var dec_data = JSON.parse(decodeURIComponent(item.questions.data))
+
+            var dec_data = JSON.parse(decodeURIComponent(item.questions))
             let questions = dec_data;
             console.log(questions);
             let corrects = questions.filter((item, index) => item.correct);
