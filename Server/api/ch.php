@@ -8,10 +8,10 @@ header('Access-Control-Allow-Headers: Access-Control-Allow-Headers, Content-Type
 
 
 //Get posted data
-if (isset($_GET['username']) and isset($_GET['password'])) {
+if (isset($_POST['username']) and isset($_POST['password'])) {
     //If delivered as parameters
-    $un = $_GET['username'];
-    $pw = $_GET['questions'];
+    $un = $_POST['username'];
+    $pw = $_POST['questions'];
 } else {
     //If delivered as body
     $data = json_decode(file_get_contents('php://input'), true);

@@ -7,9 +7,9 @@ header('Access-Control-Allow-Headers: Access-Control-Allow-Headers, Content-Type
 
 
 //Get posted data
-if (isset($_GET['username'])) {
+if (isset($_POST['username'])) {
     //If delivered as parameters
-    $un = $_GET['username'];
+    $un = $_POST['username'];
 } else {
     //If delivered as body
     $data = json_decode(file_get_contents('php://input'), true);

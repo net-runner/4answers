@@ -7,10 +7,10 @@ header('Access-Control-Allow-Methods: POST');
 header('Access-Control-Allow-Headers: Access-Control-Allow-Headers, Content-Type, Access-Control-Allow-Methods, Authorization, X-Requested-With');
 
 //Get posted data
-if (isset($_GET['username']) and isset($_GET['stats'])) {
+if (isset($_POST['username']) and isset($_POST['stats'])) {
     //If delivered as parameters
-    $un = $_GET['username'];
-    $st = $_GET['stats'];
+    $un = $_POST['username'];
+    $st = $_POST['stats'];
     $an = $data['answers'];
 } else {
     //If delivered as body
@@ -47,7 +47,7 @@ if (!empty($res)) {
         $id = $ok["id"];
         $co = array("id" => $id);
         $resoult = pg_select($conn, "questions", $co);
-        $rwss = pg_fetch_row($rws);
+        $rwss = pg_fetch_row($resoult);
         $fAQ = $rwss[8] + 1;
         $crAQ = $rwss[7];
         if (isset($ok["correct"])) {
