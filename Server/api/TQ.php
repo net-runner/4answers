@@ -1,8 +1,6 @@
 <?php
 require_once "../index.php";
 //GET TOP 10 QUESTIONS BY CORRECT PERCENTAGE
-header('Access-Control-Allow-Origin: *');
-header('Content-Type: application/json');
 header('Access-Control-Allow-Methods: POST');
 header('Access-Control-Allow-Headers: Access-Control-Allow-Headers, Content-Type, Access-Control-Allow-Methods, Authorization, X-Requested-With');
 

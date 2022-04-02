@@ -3,11 +3,18 @@ header('Access-Control-Allow-Origin: *');
 header('Content-Type: application/json');
 
 require __DIR__ . '/vendor/autoload.php';
-$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
-$dotenv->load();
+$dbopts;
+try {
+    $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+    $dotenv->load();
+    $dbopts = parse_url($_SERVER['DATABASE_URL']);
+} catch (Exception $ex) {
+    $dbopts = parse_url(getenv('DATABASE_URL'));
+}
 
 
-$dbopts = parse_url($_SERVER['DATABASE_URL']);
+
+
 
 class Database
 {
