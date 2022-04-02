@@ -18,6 +18,8 @@ export const History = ({ user }) => {
       .then(result => result.json())
       .catch(err => console.log(err))
       .then(data => {
+        console.log("H---");
+        console.log(data);
         if (data.data) {
           let datois = data.data.map((item, index) => {
             let questions = JSON.parse(item.questions);
