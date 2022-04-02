@@ -1,7 +1,6 @@
 <?php
 //Get all history data
 require "../index.php";
-header('Access-Control-Allow-Origin: https://4answers.netlify.app');
 header('Access-Control-Allow-Methods: POST');
 
 
