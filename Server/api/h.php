@@ -29,7 +29,7 @@ if (!empty($res)) {
         $q_arr['data'] = array();
         while ($row = pg_fetch_row($rw)) {
 
-            $questions = $row[3];
+            $questions = json_encode($row[3]);
             if (!empty($questions)) {
                 $q_item = array(
                     'questions' => $questions,
