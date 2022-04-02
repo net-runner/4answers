@@ -22,6 +22,7 @@ export const History = ({ user }) => {
         console.log(data.data);
         if (data.data) {
           var dec_data = JSON.parse(decodeURIComponent(data.data))
+          console.log(dec_data)
           let datois = dec_data.map((item, index) => {
             let questions = item.questions;
             console.log(questions);
