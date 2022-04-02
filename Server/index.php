@@ -1,5 +1,5 @@
 <?php
-header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Origin: https://4answers.netlify.app/');
 header('Content-Type: application/json');
 
 require __DIR__ . '/vendor/autoload.php';
