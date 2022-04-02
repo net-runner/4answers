@@ -23,7 +23,8 @@ export const History = ({ user }) => {
         if (data.data) {
           let datois = data.data.map((item, index) => {
             let questions = JSON.parse(item.questions);
-            let corrects = questions.data.filter((item, index) => item.correct);
+            console.log(questions);
+            let corrects = questions.filter((item, index) => item.correct);
             return { ...item, corrects, questions };
           });
           setHistory(datois);
