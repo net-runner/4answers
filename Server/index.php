@@ -1,5 +1,5 @@
 <?php
-header('Access-Control-Allow-Origin: https://4answers.netlify.app');
+header('Access-Control-Allow-Origin: https://for-answers.herokuapp.com/');
 header('Content-Type: application/json');
 
 require __DIR__ . '/vendor/autoload.php';
@@ -11,9 +11,6 @@ try {
 } catch (Exception $ex) {
     $dbopts = parse_url(getenv('DATABASE_URL'));
 }
-
-
-
 
 
 class Database
