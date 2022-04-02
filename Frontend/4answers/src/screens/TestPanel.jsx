@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import "../App.css";
 import { Question } from "../components/Question";
 import { Buttonor } from "../components/Buttonor";
+import SERVER_URL from "../constants";
 export const TestPanel = ({ user, sU }) => {
   const [Corrects, setCorrects] = useState(0);
   const [Finished, setFinished] = useState(false);
@@ -42,7 +43,7 @@ export const TestPanel = ({ user, sU }) => {
     setCorrects(crcts.length);
     setFinished(true);
     localStorage.removeItem("q");
-    fetch("http://localhost/4answers/server/api/u.php", {
+    fetch(SERVER_URL + "u.php", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -65,7 +66,7 @@ export const TestPanel = ({ user, sU }) => {
         localStorage.setItem("user", JSON.stringify(xd));
       })
       .catch(err => console.log("Error: " + err));
-    fetch("http://localhost/4answers/server/api/ch.php", {
+    fetch(SERVER_URL + "ch.php", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -84,7 +85,7 @@ export const TestPanel = ({ user, sU }) => {
   const getQuestions =
     useCallback(
       () => {
-        fetch("http://localhost/4answers/server/api/q.php", {
+        fetch(SERVER_URL + "q.php", {
           headers: {
             Accept: "application/json",
             "Content-Type": "application/json"

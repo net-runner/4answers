@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "../App.css";
 import { Leaderquestion } from "../components/Leaderquestion";
 import { UserItem } from "../components/UserItem"
+import SERVER_URL from "../constants";
 
 export const Management = () => {
   const [Selected, setSelected] = useState(false);
@@ -22,7 +23,7 @@ export const Management = () => {
         window.alert("Correct answers cannot be lower or equal to 0")
       } else if (item[section] > 0) {
 
-        fetch("http://localhost/4answers/server/api/eq.php", {
+        fetch(SERVER_URL + "eq.php", {
           method: "POST",
           headers: {
             Accept: "application/json",
@@ -34,7 +35,7 @@ export const Management = () => {
             value
           })
         }).then(result => result.json())
-          .then(data => fetch("http://localhost/4answers/server/api/aq.php", {
+          .then(data => fetch(SERVER_URL + "aq.php", {
             headers: {
               Accept: "application/json",
               "Content-Type": "application/json"
@@ -55,7 +56,7 @@ export const Management = () => {
         window.alert("Correct answers cannot be lower than 0")
       } else if (item[section] >= 0) {
 
-        fetch("http://localhost/4answers/server/api/eq.php", {
+        fetch(SERVER_URL + "eq.php", {
           method: "POST",
           headers: {
             Accept: "application/json",
@@ -67,7 +68,7 @@ export const Management = () => {
             value
           })
         }).then(result => result.json())
-          .then(data => fetch("http://localhost/4answers/server/api/aq.php", {
+          .then(data => fetch(SERVER_URL + "aq.php", {
             headers: {
               Accept: "application/json",
               "Content-Type": "application/json"
@@ -86,7 +87,7 @@ export const Management = () => {
       if (item.userType === "admin") {
 
 
-        fetch("http://localhost/4answers/server/api/eq.php", {
+        fetch(SERVER_URL + "eq.php", {
           method: "POST",
           headers: {
             Accept: "application/json",
@@ -98,7 +99,7 @@ export const Management = () => {
             value: "normal"
           })
         }).then(result => result.json())
-          .then(data => fetch("http://localhost/4answers/server/api/aq.php", {
+          .then(data => fetch(SERVER_URL + "aq.php", {
             headers: {
               Accept: "application/json",
               "Content-Type": "application/json"
@@ -113,7 +114,7 @@ export const Management = () => {
 
       } else {
 
-        fetch("http://localhost/4answers/server/api/eq.php", {
+        fetch(SERVER_URL + "eq.php", {
           method: "POST",
           headers: {
             Accept: "application/json",
@@ -125,7 +126,7 @@ export const Management = () => {
             value: "admin"
           })
         }).then(result => result.json())
-          .then(data => fetch("http://localhost/4answers/server/api/aq.php", {
+          .then(data => fetch(SERVER_URL + "aq.php", {
             headers: {
               Accept: "application/json",
               "Content-Type": "application/json"
@@ -140,7 +141,7 @@ export const Management = () => {
       }
     } else if (section === "questions") {
 
-      fetch("http://localhost/4answers/server/api/eq.php", {
+      fetch(SERVER_URL + "eq.php", {
         method: "POST",
         headers: {
           Accept: "application/json",
@@ -154,7 +155,7 @@ export const Management = () => {
       }).then(result => result.json())
         .then(data => {
           console.log(data)
-          fetch("http://localhost/4answers/server/api/aq.php", {
+          fetch(SERVER_URL + "aq.php", {
             headers: {
               Accept: "application/json",
               "Content-Type": "application/json"
@@ -169,7 +170,7 @@ export const Management = () => {
 
     }
     else {
-      fetch("http://localhost/4answers/server/api/eq.php", {
+      fetch(SERVER_URL + "eq.php", {
         method: "POST",
         headers: {
           Accept: "application/json",
@@ -183,7 +184,7 @@ export const Management = () => {
       }).then(result => result.json())
         .then(data => {
           console.log(data)
-          fetch("http://localhost/4answers/server/api/aq.php", {
+          fetch(SERVER_URL + "aq.php", {
             headers: {
               Accept: "application/json",
               "Content-Type": "application/json"
@@ -208,7 +209,7 @@ export const Management = () => {
         window.alert("Correct answers cannot be lower or equal to 0")
       } else if (item[section] > 0) {
 
-        fetch("http://localhost/4answers/server/api/eu.php", {
+        fetch(SERVER_URL + "eu.php", {
           method: "POST",
           headers: {
             Accept: "application/json",
@@ -220,7 +221,7 @@ export const Management = () => {
             value
           })
         }).then(result => result.json())
-          .then(data => fetch("http://localhost/4answers/server/api/au.php", {
+          .then(data => fetch(SERVER_URL + "au.php", {
             headers: {
               Accept: "application/json",
               "Content-Type": "application/json"
@@ -241,7 +242,7 @@ export const Management = () => {
         window.alert("Correct answers cannot be lower than 0")
       } else if (item[section] >= 0) {
 
-        fetch("http://localhost/4answers/server/api/eu.php", {
+        fetch(SERVER_URL + "eu.php", {
           method: "POST",
           headers: {
             Accept: "application/json",
@@ -253,7 +254,7 @@ export const Management = () => {
             value
           })
         }).then(result => result.json())
-          .then(data => fetch("http://localhost/4answers/server/api/au.php", {
+          .then(data => fetch(SERVER_URL + "au.php", {
             headers: {
               Accept: "application/json",
               "Content-Type": "application/json"
@@ -272,7 +273,7 @@ export const Management = () => {
       if (item.userType === "admin") {
 
 
-        fetch("http://localhost/4answers/server/api/eu.php", {
+        fetch(SERVER_URL + "eu.php", {
           method: "POST",
           headers: {
             Accept: "application/json",
@@ -284,7 +285,7 @@ export const Management = () => {
             value: "normal"
           })
         }).then(result => result.json())
-          .then(data => fetch("http://localhost/4answers/server/api/au.php", {
+          .then(data => fetch(SERVER_URL + "au.php", {
             headers: {
               Accept: "application/json",
               "Content-Type": "application/json"
@@ -299,7 +300,7 @@ export const Management = () => {
 
       } else {
 
-        fetch("http://localhost/4answers/server/api/eu.php", {
+        fetch(SERVER_URL + "eu.php", {
           method: "POST",
           headers: {
             Accept: "application/json",
@@ -311,7 +312,7 @@ export const Management = () => {
             value: "admin"
           })
         }).then(result => result.json())
-          .then(data => fetch("http://localhost/4answers/server/api/au.php", {
+          .then(data => fetch(SERVER_URL + "au.php", {
             headers: {
               Accept: "application/json",
               "Content-Type": "application/json"
@@ -326,7 +327,7 @@ export const Management = () => {
       }
     }
     else {
-      fetch("http://localhost/4answers/server/api/eu.php", {
+      fetch(SERVER_URL + "eu.php", {
         method: "POST",
         headers: {
           Accept: "application/json",
@@ -338,7 +339,7 @@ export const Management = () => {
           value
         })
       }).then(result => result.json())
-        .then(data => fetch("http://localhost/4answers/server/api/au.php", {
+        .then(data => fetch(SERVER_URL + "au.php", {
           headers: {
             Accept: "application/json",
             "Content-Type": "application/json"
@@ -354,7 +355,7 @@ export const Management = () => {
   }
   const handleUD = us => {
 
-    fetch("http://localhost/4answers/server/api/du.php", {
+    fetch(SERVER_URL + "du.php", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -365,7 +366,7 @@ export const Management = () => {
       })
     })
       .then(result => {
-        fetch("http://localhost/4answers/server/api/au.php", {
+        fetch(SERVER_URL + "au.php", {
           headers: {
             Accept: "application/json",
             "Content-Type": "application/json"
@@ -381,7 +382,7 @@ export const Management = () => {
   };
   const handleQD = qen => {
     console.log(qen)
-    fetch("http://localhost/4answers/server/api/dq.php", {
+    fetch(SERVER_URL + "dq.php", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -393,7 +394,7 @@ export const Management = () => {
     }).then(result => result.json())
       .then(result => {
         console.log(result)
-        fetch("http://localhost/4answers/server/api/aq.php", {
+        fetch(SERVER_URL + "aq.php", {
           headers: {
             Accept: "application/json",
             "Content-Type": "application/json"
@@ -409,7 +410,7 @@ export const Management = () => {
       .catch(err => console.log(err));
   };
   useEffect(() => {
-    fetch("http://localhost/4answers/server/api/aq.php", {
+    fetch(SERVER_URL + "aq.php", {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json"
@@ -421,7 +422,7 @@ export const Management = () => {
         if (data)
           if (data.data) setQuestions(data.data);
       });
-    fetch("http://localhost/4answers/server/api/au.php", {
+    fetch(SERVER_URL + "au.php", {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json"
@@ -447,7 +448,7 @@ export const Management = () => {
           }}
           onClick={() => {
             setSelected(!Selected)
-            fetch("http://localhost/4answers/server/api/au.php", {
+            fetch(SERVER_URL + "au.php", {
               headers: {
                 Accept: "application/json",
                 "Content-Type": "application/json"
@@ -473,7 +474,7 @@ export const Management = () => {
           }}
           onClick={() => {
             setSelected(!Selected)
-            fetch("http://localhost/4answers/server/api/aq.php", {
+            fetch(SERVER_URL + "aq.php", {
               headers: {
                 Accept: "application/json",
                 "Content-Type": "application/json"

@@ -20,9 +20,7 @@ if (isset($_GET['username']) and isset($_GET['password'])) {
     $un = $data['username'];
     $pw = $data['questions'];
 }
-$sql = "SELECT * FROM users WHERE username='{$un}'";
-$rw = pg_query($conn, $sql) or die('Cannot fetch questions');
-$rows = pg_num_rows($rw);
+$res = $db->fetchUser($un);
 
 if (!empty($res)) {
     $dt = date("Y-m-d H:i:s");

@@ -10,11 +10,11 @@ header('Access-Control-Allow-Headers: Access-Control-Allow-Headers, Content-Type
 $sql =
     "SELECT *
     FROM questions
-    ORDER BY RAND()
+    ORDER BY RANDOM()
     LIMIT 10";
 
 
-$rw = pg_query($conn, $sql) or die('Cannot fetch questions');
+$rw = pg_query($conn, $sql);
 $rows = pg_num_rows($rw);
 if ($rows > 0) {
     $q_arr = array();

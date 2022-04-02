@@ -18,7 +18,7 @@
   display: flex;
   width: 98vw;
   min-height: 98vh;
-  margin-top: 1vh;
+  margin: auto;
   background-color: #121212;
   /* background-color: white; */
   font-size: calc(10px + 2vmin);

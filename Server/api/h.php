@@ -18,12 +18,11 @@ if (isset($_GET['username'])) {
     $un = $data['username'];
 }
 
-$result = pg_query_params($conn, "SELECT * FROM users WHERE username=$1", array($un));
-$res = pg_fetch_row($result);
+$res = $db->fetchUser($un);
 //If there is a user with this username
 if (!empty($res)) {
     $id = $res[0];
-    $sql = "SELECT * FROM history WHERE userId = $1 ORDER BY createdAt DESC";
+    $sql = 'SELECT * FROM history WHERE history."userId" = $1 ORDER BY history."createdAt" DESC';
     $rw = pg_query_params($conn, $sql, array($id));
     $rows = pg_num_rows($rw);
     if ($rows > 0) {

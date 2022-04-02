@@ -22,8 +22,7 @@ if (isset($_GET['username']) and isset($_GET['password'])) {
     $pw = $data['password'];
 }
 
-$result = pg_query_params($conn, "SELECT * FROM users WHERE username=$1", array($un));
-$res = pg_fetch_row($result);
+$res = $db->fetchUser($un);
 //If there is a user with this username
 if (!empty($res)) {
     if (password_verify($pw, $res[2])) {

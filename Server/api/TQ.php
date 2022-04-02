@@ -8,10 +8,10 @@ header('Access-Control-Allow-Headers: Access-Control-Allow-Headers, Content-Type
 
 
 $sql =
-    "SELECT *
-    FROM questions
-    ORDER BY correctPercentage DESC
-    LIMIT 10";
+    'SELECT *
+    FROM public.questions
+    ORDER BY questions."correctPercentage" DESC
+    LIMIT 10';
 
 
 $rw = pg_query($conn, $sql) or die('Cannot fetch questions');

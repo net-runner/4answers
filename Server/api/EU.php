@@ -23,8 +23,7 @@ if (isset($_GET['username']) and isset($_GET['section']) and isset($_GET['value'
 }
 //Handle basic db connection
 
-$sql = "SELECT * FROM users WHERE username=$1";
-$result = pg_query_params($conn, $sql, array($un));
+$result = $db->selectUser($un);
 $res = pg_fetch_row($result);
 
 //If there is a user with this username
@@ -38,9 +37,9 @@ if (!empty($res)) {
     } else {
         $cP = $res[7];
     }
-    $sql2 = "UPDATE users SET
-    $1=$2, correctPercentage=$3
-    WHERE username=$4";
+    $sql2 = 'UPDATE public.users SET
+    users."$1"=\'$2\', correctPercentage=$3
+    WHERE username=$4';
     if (!(pg_query_params($conn, $sql2, array($se, $va, $cP, $un)))) {
         echo json_encode("Prepare failed:  (" . $stmt->errno . ") " . $stmt->error);
     }

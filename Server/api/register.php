@@ -21,16 +21,14 @@ if (isset($_GET['username']) and isset($_GET['password'])) {
     $un = $data['username'];
     $pw = $data['password'];
 }
-$result = pg_query_params($conn, "SELECT * FROM users WHERE username=$1", array($un));
-$res = pg_fetch_row($result);
+$res = $db->fetchUser($un);
 if (strlen($un) >= 6 and strlen($pw) >= 6) {
     //If there is not a user with this username
     if (empty($res)) {
         $hashed_password = password_hash($pw, PASSWORD_BCRYPT);
         $dt = date("Y-m-d H:i:s");
-
-        $result = pg_query_params($conn, "INSERT INTO users (username, password, userType, registerAt, correctA, answers, correctPercentage) 
-        VALUES ($1,$2,$3,$4,$5,$6,$7)", array($un, $hashed_password, "normal", $dt, 0, 0, 100));
+        $ar = array("username" => $un, "password" => $hashed_password, "userType" => "normal", "registerAt" => $dt, "correctA" => 0, "answers" => 0, "correctPercentage" => 100);
+        $result = $db->createUser($ar);
 
         echo json_encode(array(
             'result' => "Success.",

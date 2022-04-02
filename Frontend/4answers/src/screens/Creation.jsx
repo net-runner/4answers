@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "../App.css";
 import { Question } from "../components/Question";
 import { Buttonor } from "../components/Buttonor";
+import SERVER_URL from "../constants";
 
 export const Creation = () => {
 
@@ -50,7 +51,7 @@ export const Creation = () => {
             }, 3000);
         }
         else {
-            fetch("http://localhost/4answers/server/api/cq.php", {
+            fetch(SERVER_URL + "cq.php", {
                 method: "POST",
                 headers: {
                     Accept: "application/json",

@@ -1,17 +1,16 @@
 <?php
 require_once "../index.php";
 //GET TOP 10 USERS BY CORRECT PERCENTAGE
-header('Access-Control-Allow-Origin: *');
-header('Content-Type: application/json');
 header('Access-Control-Allow-Methods: POST');
 header('Access-Control-Allow-Headers: Access-Control-Allow-Headers, Content-Type, Access-Control-Allow-Methods, Authorization, X-Requested-With');
 
 
 $sql =
-    "SELECT *
-    FROM users WHERE userType = 'normal'
-    ORDER BY correctPercentage DESC
-    LIMIT 10";
+    'SELECT *
+    FROM public.users WHERE users."userType" = \'normal\'
+    ORDER BY users."correctPercentage" DESC
+    LIMIT 10';
+
 
 
 $rw = pg_query($conn, $sql) or die('Cannot fetch users');

@@ -4,6 +4,7 @@ import { withStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import { Elevation } from "@rmwc/elevation";
 import "../App.css";
+import SERVER_URL from "../constants";
 const StyledButton = withStyles({
   root: {
     width: "13vw",
@@ -66,7 +67,7 @@ export const LoginPopup = ({ user, setUser }) => {
       setpError(true);
     }
     if (!uError && !pError) {
-      fetch("https://for-answers.herokuapp.com/api/login.php", {
+      fetch(SERVER_URL + "login.php", {
         method: "POST",
         headers: {
           Accept: "application/json",
@@ -87,7 +88,7 @@ export const LoginPopup = ({ user, setUser }) => {
             setUser({ username, userp: data.userp, type: data.type });
           } else if (data.message === "User does not exist.") {
             console.log("REGISTRAR");
-            fetch("https://for-answers.herokuapp.com/api/register.php", {
+            fetch(SERVER_URL + "register.php", {
               method: "POST",
               headers: {
                 Accept: "application/json",
@@ -135,7 +136,7 @@ export const LoginPopup = ({ user, setUser }) => {
       <Elevation z={1} wrap>
         <div
           style={{
-            backgroundColor: "rgba(255, 255, 255, 0.05)",
+            backgroundColor: "rgba(255, 255, 255, 0.06)",
             display: "flex",
             padding: "40px",
             flexDirection: "row"

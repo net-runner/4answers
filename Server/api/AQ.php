@@ -8,9 +8,9 @@ header('Access-Control-Allow-Headers: Access-Control-Allow-Headers, Content-Type
 
 
 $sql =
-    "SELECT *
+    'SELECT *
     FROM questions
-    ORDER BY correctPercentage DESC";
+    ORDER BY questions."correctPercentage" DESC';
 
 
 $rw = pg_query($conn, $sql) or die('Cannot fetch questions');

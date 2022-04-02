@@ -20,7 +20,7 @@ if (isset($_GET['username'])) {
 }
 
 //Perform query
-$sql = "DELETE FROM users WHERE username=$1";
+$sql = 'DELETE FROM users WHERE users."username"=$1';
 if (!pg_query_params($conn, $sql, array($un))) {
     echo json_encode("Binding parameters failed: (" . $stmt->errno . ") " . $stmt->error);
 }

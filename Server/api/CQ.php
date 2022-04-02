@@ -18,9 +18,9 @@ if (isset($_GET['question'])) {
     $data = json_decode(file_get_contents('php://input'), true);
     $qt = $data['question'];
 }
-$sql = "SELECT * FROM questions WHERE qText=$1";
+$sql = 'SELECT * FROM questions WHERE questions."qText"=$1';
 
-$rw = pg_query_params($conn, $sql, array($qt["qText"])) or die('Cannot fetch questions');
+$rw = pg_query_params($conn, $sql, array($qt["qText"]));
 $rows = pg_num_rows($rw);
 //If there is no question with that question text
 if (empty($res)) {

@@ -23,7 +23,7 @@ if (isset($_GET['username']) and isset($_GET['section']) and isset($_GET['value'
 }
 //Handle basic db connection
 
-$sql = "SELECT * FROM questions WHERE id=$1";
+$sql = 'SELECT * FROM questions WHERE questions."id"=$1';
 $result = pg_query_params($conn, $sql, array($un));
 $res = pg_fetch_row($result);
 //If there is a user with this username

@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
+import SERVER_URL from "../constants";
 import "../App.css";
 import { HistoryItem } from "../components/HistoryItem";
 export const History = ({ user }) => {
   const [History, setHistory] = useState([]);
   useEffect(() => {
-    fetch("http://localhost/4answers/server/api/h.php", {
+    fetch(SERVER_URL + "h.php", {
       method: "POST",
       headers: {
         Accept: "application/json",

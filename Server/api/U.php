@@ -3,8 +3,6 @@ require_once "../index.php";
 //Update stats endpoint
 
 //Adding headers
-header('Access-Control-Allow-Origin: *');
-header('Content-Type: application/json');
 header('Access-Control-Allow-Methods: POST');
 header('Access-Control-Allow-Headers: Access-Control-Allow-Headers, Content-Type, Access-Control-Allow-Methods, Authorization, X-Requested-With');
 
@@ -33,11 +31,11 @@ if (!empty($res)) {
     $fA = $res[6] + $st["answers"];
     $cP = ($crA / $fA) * 100;
 
-    $sql2 = "UPDATE users SET
-    correctA= $1,
-    answers=$2,
-    correctPercentage=$3
-    WHERE username=$4";
+    $sql2 = 'UPDATE public.users SET
+    correctA= \'$1\',
+    answers=\'$2\',
+    correctPercentage=\'$3\'
+    WHERE users."username"=\'$4\'';
     if (!(pg_query_params($conn, $sql2, array($crA, $fA, $cP, $un)))) {
         echo json_encode("Prepare failed:  (" . $stmt->errno . ") " . $stmt->error);
     }
@@ -53,7 +51,7 @@ if (!empty($res)) {
     while ($i < count($an)) {
         $ok  = $an[$i];
         $id = $ok["id"];
-        $qQ = "SELECT * FROM questions WHERE id=$1";
+        $qQ = 'SELECT * FROM public.questions WHERE questions."id"=\'$1\'';
         $rws = pg_query_params($conn, $qQ, array($qQ)) or die('Cannot fetch question');
         $rwss = pg_fetch_row($rws);
         $fAQ = $rwss[8] + 1;
@@ -65,11 +63,11 @@ if (!empty($res)) {
         }
         $cPQ = ($crAQ / $fAQ) * 100;
 
-        $sql3 = "UPDATE questions SET
-        correctA= $1,
-        answers=$2,
-        correctPercentage=$3
-        WHERE id=$4";
+        $sql3 = 'UPDATE public.questions SET
+        correctA= \'$1\',
+        answers=\'$2\',
+        correctPercentage=\'$3\'
+        WHERE questions."id"=\'$4\'';
         if (!(pg_query_params($conn, $sql3, array($crAQ, $fAQ, $cPQ, $id)))) {
             echo json_encode("Prepare failed:  (" . $stmt->errno . ") " . $stmt->error);
         }

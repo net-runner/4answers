@@ -21,7 +21,7 @@ if (isset($_GET['question'])) {
 }
 
 //Perform query
-$sql = "DELETE FROM questions WHERE qText=$1";
+$sql = 'DELETE FROM questions WHERE questions."qText"=$1';
 
 if (!pg_query_params($conn, $sql, array($qt))) {
     echo json_encode("Binding parameters failed: (" . $stmt->errno . ") " . $stmt->error);
