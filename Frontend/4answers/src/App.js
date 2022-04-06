@@ -40,9 +40,6 @@ function App() {
                 <TabPanel value={screen} index={1} style={{ flex: 9 }}>
                   <Leaderboard />
                 </TabPanel>
-                <TabPanel value={screen} index={2} style={{ flex: 9 }}>
-                  <History user={user} />
-                </TabPanel>
               </>
             )}{" "}
             {user.type === "admin" && (
